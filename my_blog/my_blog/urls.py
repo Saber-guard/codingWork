@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
+from libs.Route import Route
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^blog/', include('apps.blog.urls')),
-
+    url(r'^admin', admin.site.urls),
+    url(r'^',Route.relay),
 ]
