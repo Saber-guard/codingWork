@@ -1,6 +1,9 @@
 #-*- coding:UTF-8 -*-
 #自定义请求类
 import importlib
+from libs.FunctionLib import *
+from django.http import HttpResponse
+from django.http import HttpResponseNotFound
 
 class Route(object):
 
@@ -10,25 +13,34 @@ class Route(object):
         path = request.path
         pathinfo = path.split('/')
 
-        #获得 module,controller,action
-        try:
-            module = pathinfo[1]
-            controller = pathinfo[2]
-            action = pathinfo[3]
-        except IndexError as e:
-            pass
-
-        module = module if 'module' in dir() and module else 'index'
-        controller = controller if 'controller' in dir() and controller else 'index'
-        action = action if 'action' in dir() and action else 'index'
+        # 获得 module,controller,action
+        module = pathinfo[1] if isset(pathinfo,1) and pathinfo[1] else 'index'
+        controller = pathinfo[2] if isset(pathinfo,2) and pathinfo[2] else 'index'
+        action = pathinfo[3] if isset(pathinfo,3) and pathinfo[3] else 'index'
+        request.module = module
+        request.controller = controller
+        request.action = action
 
         #控制器首字母大写
         controller = controller.capitalize()
 
         #分发请求
-        m = importlib.import_module('apps.'+module+'.controller.'+controller,controller)
-        c = getattr(m, controller)
-        c = c()
-        a = getattr(c,action)
+        try:
+            m = importlib.import_module('apps.'+module,module)
+        except:
+            return HttpResponseNotFound('模块不存在')
 
-        return a(request)
+        try:
+            m = importlib.import_module(
+                    'apps.'+module+'.controller.'+controller,controller)
+            c = getattr(m, controller)
+        except:
+            return HttpResponseNotFound('控制器不存在')
+        c = c(request)
+
+        try:
+            a = getattr(c, action)
+        except:
+            return HttpResponseNotFound('方法不存在')
+
+        return a()

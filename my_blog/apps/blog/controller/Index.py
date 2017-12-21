@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+#-*- coding:UTF-8 -*-
+from common.Api import Api
 
-class Index(object):
-    def index(self,request):
-        return HttpResponse('aaa')
+class Index(Api):
+    def index(self):
+        return self.echo(self.module+'.'+self.controller+'.'+self.action)
