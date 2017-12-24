@@ -1,5 +1,5 @@
 #-*- coding:UTF-8 -*-
-from common.Api import Api
+from apps.common.Api import Api
 
 class Index(Api):
     def index(self):
