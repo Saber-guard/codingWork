@@ -1,12 +1,13 @@
 #-*- coding:UTF-8 -*-
 #自定义控制器类
 from django.http import HttpResponse
+# import requests
 
 class Controller(object):
 
     #属性
-    post = []
-    get = []
+    post = {}、
+    get = {}
     module = ''
     controller = ''
     action = ''
@@ -30,3 +31,11 @@ class Controller(object):
             self.controller = self.request.controller
         if hasattr(self.request,'action'):
             self.action = self.request.action
+
+    # def toPost(self,url='',param={},headers={}):
+    #     response = requests.post(url=url,data=param,headers=headers)
+    #     return response
+    #
+    # def toGet(self,url='',param={},headers={}):
+    #     response = requests.post(url=url, params=param,headers=headers)
+    #     return response

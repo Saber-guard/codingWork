@@ -22,7 +22,9 @@ class Route(object):
         request.action = action
 
         #控制器首字母大写
+        module = module.capitalize()
         controller = controller.capitalize()
+        action = action.capitalize()
 
         #分发请求
         try:
