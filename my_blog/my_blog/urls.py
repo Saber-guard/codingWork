@@ -16,9 +16,18 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
+
 from libs.Route import Route
+from apps.blog.controller.Index import Index
+
 
 urlpatterns = [
     url(r'^admin', admin.site.urls),
-    url(r'^',Route.relay),
+    url(r'^api-auth/', include('rest_framework.urls')),
+
+    #动态路由
+    url('^(?P<app>(\w+))/(?P<controller>(\w+))/$',Route.relay),
+    url('^(?P<app>(\w+))/$',Route.relay,{'controller':'index'}),
+    url(r'^$',Route.relay,{'app':'blog','controller':'index'}),
 ]
+
