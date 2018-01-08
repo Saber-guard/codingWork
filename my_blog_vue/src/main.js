@@ -1,28 +1,19 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Vuex from 'vuex'
+//导入类库
+import Vue from '@/libs/Vue.js'
+import Router from '@/libs/Route.js'
+import Store from '@/libs/Store.js'
 
-import routes from './route'
-import stores from './store'
-import App from './components/App'
+//导入组件
+import App from '@/components/App'
 
-
+//调试模式
 Vue.config.productionTip = true
-Vue.use(Router);
-Vue.use(Vuex);
 
-//路由
-let router = new Router({
-	// mode: 'history',
-  	routes: routes
-});
-//vuex
-let store = new Vuex.Store(stores)
-
+//创建Vue实例
 new Vue({
 	el: '#app',
-	router:router,
-	store:store,
+	router:Router,
+	store:Store,
 	template: '<App/>',
 	components: {
 		App:App

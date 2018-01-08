@@ -1,11 +1,11 @@
 <template>
 <div class="aaa">
-	<span @click="toto">{{baseURL}}</span>
+	<span @click="setCookie">{{API_URL}}</span>
 <router-view/>
 </div>
 </template>
 <script>
-import common from './common.js'
+import common from '@/components/common'
 
 export default {
 	extends:common,
@@ -20,7 +20,6 @@ export default {
 			this.axios({
 			    method:"POST",
 			    url:'zhibo/zhibolist',
-			    //baseURL:'http://app.douniu.com/index.php/',
 			    data:{
 					"sid":1,
 					"index":1,
@@ -32,6 +31,10 @@ export default {
 					"page":1
 			    }
 			})
+		},
+		setCookie:function(){
+			// this.cookie.setCookie('aa',1234)
+			console.log(this.cookie.getCookie('aa'))
 		}
 	},
 }
