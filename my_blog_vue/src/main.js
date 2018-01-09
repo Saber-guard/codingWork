@@ -4,9 +4,14 @@ import Router from '@/libs/Route.js'
 import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
+import $ from 'jquery'
+
 
 //导入组件
 import App from '@/components/App'
+
+//导入全局样式
+import 'element-ui/lib/theme-chalk/index.css'
 
 //调试模式
 Vue.config.productionTip = true
