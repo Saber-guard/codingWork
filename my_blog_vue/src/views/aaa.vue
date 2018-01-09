@@ -17,7 +17,7 @@ export default {
 	},
 	methods:{
 		toto:function(){
-			this.axios({
+			this.$axios({
 			    method:"POST",
 			    url:'zhibo/zhibolist',
 			    data:{
@@ -33,8 +33,8 @@ export default {
 			})
 		},
 		setCookie:function(){
-			// this.cookie.setCookie('aa',1234)
-			console.log(this.cookie.getCookie('aa'))
+			//this.$cookie.setCookie('aa',12345)
+			console.log(this.$cookie.getCookie('aa'))
 		}
 	},
 }

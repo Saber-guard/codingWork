@@ -1,15 +1,12 @@
 <script>
 import Vue from 'vue'
-import Axios from '@/libs/Axios'
-import Cookie from '@/libs/Cookie'
 
-export default Vue.extend({
+export default {
 	data:function (){
-	    return {
-	    	API_URL:this.$store.state.API_URL,
-	    	axios:Axios.curl,
-	    	cookie:Cookie,
-	    }
+		//先获取store里的数据
+		let common_data = this.$store.state
+
+	    return common_data
 	},
-})
+}
 </script>
