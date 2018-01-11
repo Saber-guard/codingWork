@@ -11,6 +11,7 @@ import $ from 'jquery'
 import App from '@/components/App'
 
 //导入全局样式
+import '@/assets/css/base.css'
 import 'element-ui/lib/theme-chalk/index.css'
 
 //调试模式
