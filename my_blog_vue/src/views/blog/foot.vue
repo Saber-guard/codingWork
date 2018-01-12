@@ -29,7 +29,7 @@ export default {
 
 </script>
 <style>
-footer { border-top: 9px solid #8E6D56; background: #242221; width: 100%; }
+footer { border-top: 9px solid #8E6D56; background: #242221;position: relative;width: 100%;z-index:10000;}
 .footavatar { width: 700px; margin: auto; position: relative; color: #666; }
 .footavatar img{ height:110px}
 .footphoto { position: absolute; top: -58px; left: 20px; display: block; border: #8E6D56 5px solid; }

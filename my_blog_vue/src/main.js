@@ -12,12 +12,14 @@ import App from '@/components/App'
 
 //导入全局样式
 import '@/assets/css/base.css'
+import '@/assets/css/font-awesome.min.css'
 import 'element-ui/lib/theme-chalk/index.css'
 
 //调试模式
 Vue.config.productionTip = true
 Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
+Vue.prototype.$Vue = Vue
 
 //创建Vue实例
 new Vue({

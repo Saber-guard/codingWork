@@ -2,7 +2,7 @@
 <header>
 	<nav id="nav">
 		<ul>
-			<li><a href="#" id="nav_current">Daiski的代码工坊</a></li>
+			<li><a href="#" id="nav_current">首页</a></li>
 			<li><a href="/download/" target="_blank">分类列表</a></li>
 			<li><a href="/download/" target="_blank">发表博客</a></li>
 		</ul>
