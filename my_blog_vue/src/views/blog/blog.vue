@@ -2,26 +2,33 @@
 <div class="blog">
 	<headhead></headhead>
 	<router-view/>
-	<footfoot></footfoot>
+	<footfoot v-if="hasFoot"></footfoot>
 </div>
 </template>
 <script>
+/*
+@ type: view
+ */
 import common from '@/components/common'
-import head from '@/views/blog/head'
-import foot from '@/views/blog/foot'
+import head from '@/views/blog/common/head'
+import foot from '@/views/blog/common/foot'
 
 export default {
 	extends:common,
 	name: 'blog',
+	data:function(){
+		return {
+			hasHead:true,
+			hasFoot:true,
+		}
+	},
 	methods:{
 
 	},
 	components:{
 		headhead:head,
 		footfoot:foot,
-		// list:list,
 	},
-	
 }
 
 </script>
