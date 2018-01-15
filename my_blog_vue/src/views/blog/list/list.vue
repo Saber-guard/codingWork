@@ -72,7 +72,7 @@ export default {
 
 .blog-list>.left{min-width: 270px;width:33%;float:left;position:relative;height:100%;}
 
-.blog-list>.right{min-width: 730px;width:66%;float:right;position:relative;}
+.blog-list>.right{min-width: 730px;width:66%;min-height:800px;float:right;position:relative;}
 .blog-list .right>div.shutiao{height:120%;width:8px;background:#bababa;position:absolute;left:90%;top:-63px;}
 .blog-list .right .blogitems { width: 730px;margin-top: 60px;}
 

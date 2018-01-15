@@ -80,6 +80,6 @@ function change(value,render)
 
 </script>
 <style>
-.blog-article-markdowm{height:500px;}
+.blog-article-markdowm{height:700px;}
 </style>
 

@@ -28,6 +28,6 @@ new Vue({
 	store:Store,
 	template: '<App/>',
 	components: {
-		App:App
+		App:App,
 	}
 })

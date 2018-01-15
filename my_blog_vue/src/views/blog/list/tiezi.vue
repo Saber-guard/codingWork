@@ -45,8 +45,8 @@ export default {
 
 </script>
 <style>
-.blog-list-article{width:600px; background: #fff;margin-bottom:20px;box-shadow: #999 3px 4px 6px;position:relative;border-radius:1px;background-image:url(/static/images/fangge.jpg);transition: left 0.5s,bottom 0.5s,box-shadow 0.5s;-webkit-transition: left 0.5s,bottom 0.5s,box-shadow 0.5s;left:0px;bottom:0px;}
-.blog-list-article:hover{left:5px;bottom:5px;box-shadow: #777 8px 9px 6px;}
+.blog-list-article{width:600px; background: #fff;margin-bottom:20px;box-shadow: #999 3px 4px 6px;position:relative;border-radius:1px;background-image:url(/static/images/fangge.jpg);transition:box-shadow 0.5s;-webkit-transition:box-shadow 0.5s;}
+.blog-list-article:hover{box-shadow: #777 8px 9px 6px;}
 .blog-list-article .content{height:290px;}
 .blog-list-article .content .pic{width:596px;height:210px;overflow:hidden;border:#fff 2px solid;border-radius:1px;}
 .blog-list-article .content .describe{width:560px;height:66px;padding:2px 20px;overflow: hidden;}
