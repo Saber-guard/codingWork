@@ -1,6 +1,6 @@
 <template>
 <div class="blog">
-	<headhead></headhead>
+	<headhead v-if="hasHead"></headhead>
 	<router-view/>
 	<footfoot v-if="hasFoot"></footfoot>
 </div>

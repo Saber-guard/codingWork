@@ -6,11 +6,8 @@ from rest_framework.views import APIView
 class Controller(APIView):
 
     #属性
-    post = {}
-    get = {}
-    module = ''
-    controller = ''
-    action = ''
+    # post = {}
+    # get = {}
 
     #初始化
     def __init__(self):

@@ -25,8 +25,18 @@ export default {
 }
 
 </script>
-<style>
-.blog-common-headLine { height:40px;min-width:750px;width:96%;background:#fff;position:absolute;left:-35px;top:8px;box-shadow: #877 5px 5px 5px;}
-.blog-common-headLine .zhedie{background:#ddd;width:40px;height:40px;}
+<style lang="scss" scoped>
+.blog-common-headLine {
+  height:40px;
+  min-width:750px;
+  width:96%;
+  background:#fff;
+  position:absolute;
+  left:-35px;
+  top:8px;
+  box-shadow: #877 5px 5px 5px;
+  .zhedie{background:#ddd;width:40px;height:40px;}
+}
+
 </style>
 

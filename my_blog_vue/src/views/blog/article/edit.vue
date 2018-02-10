@@ -51,10 +51,22 @@ function textChange(param)
 }
 
 </script>
-<style>
-.blog-article-edit{width:40%;min-height:800px;float:left;transition: width 0.1s,opacity 0.1s;-webkit-transition: width 0.1s,opacity 0.1s;background-color:#fff;opacity:1;overflow:auto;}
-.blog-article-edit.show{width:26%;opacity:0;}
-.blog-article-edit .edit-list.hidden{display: none;}
-.blog-article-edit .edit-list>div{padding:5px;}
+<style lang="scss" scoped>
+.blog-article-edit{
+  width:40%;
+  min-height:800px;
+  float:left;
+  transition: width 0.1s,opacity 0.1s;
+  -webkit-transition: width 0.1s,opacity 0.1s;
+  background-color:#fff;
+  opacity:1;
+  overflow:auto;
+  .edit-list.hidden{display: none;}
+  .edit-list>div{padding:5px;}
+}
+.blog-article-edit.show{
+  width:26%;
+  opacity:0;
+}
 </style>
 

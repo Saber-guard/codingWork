@@ -9,5 +9,5 @@ class Index(Api):
         return self.echo(request.data)
     def put(self,request,format=None):
         return self.echo(request.data)
-    # def delete(self,request,format=None):
-    #     return self.echo(request.data)
+    def delete(self,request,format=None):
+        return self.echo(request.data)

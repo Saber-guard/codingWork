@@ -79,7 +79,7 @@ function change(value,render)
 }
 
 </script>
-<style>
+<style lang="scss" scoped>
 .blog-article-markdowm{height:700px;}
 </style>
 

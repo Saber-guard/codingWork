@@ -104,14 +104,24 @@ export default {
 }
 
 </script>
-<style>
-.blog-category {min-width: 1100px;background: #DDD6CC; width: 100%; margin: 20px auto 0px;}
+<style lang="scss" scoped>
+.blog-category {
+  min-width: 1100px;
+  background: #DDD6CC;
+  width: 100%;
+  margin: 20px auto 0px;
+  >.left{min-width: 270px;width:33%;float:left;position:relative;height:100%;}
+  >.right{
+    min-width: 730px;
+    width:66%;
+    min-height:800px;
+    float:right;
+    position:relative;
+    >div.shutiao{height:120%;width:8px;background:#bababa;position:absolute;left:90%;top:-63px;}
+    .cates {min-width: 660px;width:85%;margin-top: 60px;}
+  }
+}
 
-.blog-category>.left{min-width: 270px;width:33%;float:left;position:relative;height:100%;}
-
-.blog-category>.right{min-width: 730px;width:66%;min-height:800px;float:right;position:relative;}
-.blog-category .right>div.shutiao{height:120%;width:8px;background:#bababa;position:absolute;left:90%;top:-63px;}
-.blog-category .right .cates {min-width: 660px;width:85%;margin-top: 60px;}
 
 </style>
 

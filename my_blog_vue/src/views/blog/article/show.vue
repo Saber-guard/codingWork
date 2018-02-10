@@ -53,22 +53,56 @@ function edit()
 }
 
 </script>
-<style>
-.blog-article-show{width:70%;min-width:650px;min-height:800px;background:url(/static/images/fengelan.png) repeat-y #fff;border-right:4px solid #333;box-shadow: #444 2px 3px 6px;float:left;transition: width 0.1s;-webkit-transition: width 0.1s;}
-.blog-article-show.edit{width:55%;}/*#show的编辑模式*/
-.blog-article-show .nav{height:30px;border-bottom:1.5px solid #555;margin:0px 20px;}
-.blog-article-show .nav .dir-line{display:inline-block;font-family:微软雅黑;font-weight: bold;font-size:14px;line-height:35px;padding-left:5px;}
-.blog-article-show .dir-line a{padding-right:5px;color:#8E6D56;}
-.blog-article-show .dir-line a:hover{text-decoration:underline;}
+<style lang="scss" scoped>
+.blog-article-show{
+  width:70%;
+  min-width:650px;
+  min-height:800px;
+  background:url(/static/images/fengelan.png) repeat-y #fff;
+  border-right:4px solid #333;
+  box-shadow: #444 2px 3px 6px;
+  float:left;
+  transition: width 0.1s;
+  -webkit-transition: width 0.1s;
+  .nav{
+    height:30px;
+    border-bottom:1.5px solid #555;
+    margin:0px 20px;
+    .dir-line{
+      display:inline-block;
+      font-family:微软雅黑;
+      font-weight: bold;
+      font-size:14px;
+      line-height:35px;
+      padding-left:5px;
+    }
+  }
+  .dir-line{
+    a{padding-right:5px;color:#8E6D56;}
+    a:hover{text-decoration:underline;}
+  }
 
-.blog-article-show .title{max-width:1000px;margin:0px 60px;padding:16px 20px 5px;}
-.blog-article-show .title .text{font-family:幼圆;font-weight: bolder;font-size:26px;letter-spacing:2px;}
-.blog-article-show .title sub{font-size:11px;font-weight: bold;color:#8E6D56;margin:0px 8px;}
+  .title{
+    max-width:1000px;
+    margin:0px 60px;
+    padding:16px 20px 5px;
+    .text{font-family:幼圆;font-weight: bolder;font-size:26px;letter-spacing:2px;}
+    sub{font-size:11px;font-weight: bold;color:#8E6D56;margin:0px 8px;}
+  }
 
-.blog-article-show .status{max-width:1000px;margin:0px 60px;padding:4px 20px;border-bottom:1px dotted #444;}
-.blog-article-show .status div{display:inline-block;color:#8E6D56;font-weight: bold;font-size:14px;}
+  .status{
+    max-width:1000px;
+    margin:0px 60px;
+    padding:4px 20px;
+    border-bottom:1px dotted #444;
+    div{display:inline-block;color:#8E6D56;font-weight: bold;font-size:14px;}
+  }
 
-.blog-article-show .show-markdown{max-width:1000px;margin:0px 60px;padding:20px 20px;}
+  .show-markdown{max-width:1000px;margin:0px 60px;padding:20px 20px;}
+}
+.blog-article-show.edit{
+  width:55%;
+}/*#show的编辑模式*/
 
 </style>
 

@@ -67,14 +67,25 @@ export default {
 }
 
 </script>
-<style>
-.blog-list { min-width: 1100px;background: #DDD6CC; width: 100%; margin: 20px auto 0px;}
+<style lang="scss" scoped>
+.blog-list {
+  min-width: 1100px;
+  background: #DDD6CC;
+  width: 100%;
+  margin: 20px auto 0px;
+  >.left{min-width: 270px;width:33%;float:left;position:relative;height:100%;}
+  >.right{
+    min-width: 730px;
+    width:66%;
+    min-height:800px;
+    float:right;
+    position:relative;
+    >div.shutiao{height:120%;width:8px;background:#bababa;position:absolute;left:90%;top:-63px;}
+    .blogitems { width: 730px;margin-top: 60px;}
+  }
+}
 
-.blog-list>.left{min-width: 270px;width:33%;float:left;position:relative;height:100%;}
 
-.blog-list>.right{min-width: 730px;width:66%;min-height:800px;float:right;position:relative;}
-.blog-list .right>div.shutiao{height:120%;width:8px;background:#bababa;position:absolute;left:90%;top:-63px;}
-.blog-list .right .blogitems { width: 730px;margin-top: 60px;}
 
 
 </style>

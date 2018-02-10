@@ -74,7 +74,7 @@ function heightEQ()
 }
 
 </script>
-<style>
+<style lang="scss" scoped>
 .blog-article{min-width:1100px;width:100%;height:100%;background:no-repeat;background-image:url(/static/images/2b2bleft.jpg),url(/static/images/2b2bright.jpg);background-position:left top,right top;background-attachment:fixed;background-size:auto 100%;}
 
 </style>
