@@ -11,15 +11,15 @@
 		</div>
 	</div>
 	<div class="title">
-		<span class="text" v-text="article.title"></span>
+		<span class="text" v-text="article.a_title"></span>
 		<sub class="fa fa-edit"><a href="javascript:void(0);" @click="edit">编辑</a></sub>
 	</div>
 	<div class="status">
-		<div v-text="article.datetime"></div>
-		<div v-text="article.zan+'赞'"></div>
-		<div v-text="article.look+'查看'"></div>
+		<div v-text="article.a_datetime"></div>
+		<div v-text="'0赞'"></div>
+		<div v-text="'0查看'"></div>
 	</div>
-	<div class="show-markdown" v-html="article.render">
+	<div class="show-markdown" v-html="render_text">
 	</div>
 </div>
 </template>
@@ -35,8 +35,9 @@ import '@/assets/css/markdown.css'
 export default {
 	extends:common,
 	name: 'show',
-	props:['mode','article'],
+	props:['mode','article','render_text'],
     data:function(){
+	      console.log(this.render_text)
         return {
 
         }

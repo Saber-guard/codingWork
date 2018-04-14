@@ -4,7 +4,8 @@
 					:toolbars="toolbars"
 					:subfield="false"
 					:value="content"
-					@change="change"></mavon-editor>
+          @change="change"
+					@save="save"></mavon-editor>
 </div>
 </template>
 <script>
@@ -66,6 +67,7 @@ export default {
     },
 	methods:{
 		change:change,
+    save:save,
 	},
     components:{
         'mavon-editor': mavonEditor
@@ -77,6 +79,12 @@ function change(value,render)
 {
 	this.$emit('text-change',{value:value,render:render})
 }
+//按下保存键时
+function save(value,render)
+{
+  this.$emit('ctrl-save',{value:value,render:render})
+}
+
 
 </script>
 <style lang="scss" scoped>

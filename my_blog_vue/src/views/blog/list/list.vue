@@ -26,39 +26,37 @@ import headLine from '../common/headLine'
 import leftAside from '../common/leftAside'
 
 export default {
-	extends:common,
-	name: 'list',
+	  extends:common,
+	  name: 'list',
+    created:function() {
+      this.$axios({
+        method:"get",
+        url:'cms/article_list',
+        params:{
+          "c_id":this.$route.params['id'],
+          "select":"title,id,describe,pic",
+          "size":10,
+        }
+      }).then(function (response) {
+        this.articles = response.data.data
+      }.bind(this))
+    },
     mounted:function()
     {
         this.initStyle();
     },
     data:function(){
         return {
-            articles:[
-                {
-                    id:1,
-                    title:'PHP是世界上最好的编程语言，没有之一！',
-                    describe:'百度编辑器上传图片到本项目的时候，没有问题，一旦跨域上传图片的时候就会导致图片上传错误，原因是因为百度编辑器使用的编辑区域是IFrame，而父窗口和主窗口的数据不可跨域调用。解决方案：将百度编辑器的图片数据提交到本项目...',
-                    pic:'/static/images/2b.jpg',
-                    select:false,
-                },
-                {
-                    id:2,
-                    title:'PHP是世界上最好的编程语言，没有之一！',
-                    describe:'百度编辑器上传图片到本项目的时候，没有问题，一旦跨域上传图片的时候就会导致图片上传错误，原因是因为百度编辑器使用的编辑区域是IFrame，而父窗口和主窗口的数据不可跨域调用。解决方案：将百度编辑器的图片数据提交到本项目...',
-                    pic:'/static/images/2b.jpg',
-                    select:false,
-                },
-            ],
+            articles:[],
         }
     },
-	methods:{
-        //初始化一些样式
-        initStyle:function initStyle(){
-            $('.blog-list > .left').css('height',$('.blog-list > .right').css('height'));
-            $('.right > div.shutiao').css('height',$('html').css('height'));
-        },
-	},
+    methods:{
+          //初始化一些样式
+          initStyle:function initStyle(){
+              $('.blog-list > .left').css('height',$('.blog-list > .right').css('height'));
+              $('.right > div.shutiao').css('height',$('html').css('height'));
+          },
+    },
     components:{
         tiezi:tiezi,
         headLine:headLine,

@@ -1,11 +1,34 @@
 <template>
 <div class="blog-article-edit" :class="{show:mode==0}">
 	<div class="edit-list" :class="{hidden:mode==0}">
+    <div>
+      <el-form :label-position="'left'" :label-suffix="':'">
+        <el-form-item label="栏目">
+          <el-select v-model="article.a_c_id" :disabled="article.a_id?true:false">
+            <el-option
+                :label="cate.c_title"
+                :value="cate.c_id"
+                v-for="cate in category_list"
+                :key="cate.c_id"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="标题">
+          <el-input v-model="article.a_title" ></el-input>
+        </el-form-item>
+        <el-form-item label="简介">
+          <el-input type="textarea" v-model="article.a_describe"></el-input>
+        </el-form-item>
+      </el-form>
+    </div>
 		<div>
-			<markdowm 	:content="article.text"
-						@text-change="textChange"></markdowm>
+			<markdowm
+          :content="article.a_text"
+          @text-change="textChange"
+          @ctrl-save="submit"
+          ></markdowm>
 		</div>
 		<div>
+			<el-button type="success" @click="submit">保存</el-button>
 			<el-button type="primary" @click="show">关闭</el-button>
 		</div>
 	</div>
@@ -23,15 +46,34 @@ import markdowm from './markdowm'
 export default {
 	extends:common,
 	name: 'edit',
-	props:['mode','article'],
-    data:function(){
+	props:['mode','article','render_text'],
+  data:function(){
         return {
-
+          category_list:[]
         }
-    },
+  },
+  created:function(){
+	  //获取栏目类型列表
+    this.$axios({
+      method:"get",
+      url:'cms/category_list',
+      params:{
+        "parent":1,
+        "select":"title,id",
+      }
+    }).then(function (response) {
+      let data = response.data
+      if (data.errno == 0) {
+        this.category_list = data.data
+      }
+    }.bind(this))
+  },
 	methods:{
 		show:show,
-		textChange:textChange,
+		submit:submit,
+		update:update,
+		create:create,
+		textChange:textChange,//内容改变
 	},
 	components:{
 		markdowm:markdowm,
@@ -49,6 +91,69 @@ function textChange(param)
 {
 	this.$emit('text-change',param)
 }
+
+//提交
+function submit()
+{
+  if (this.article.a_id) {
+    //修改文章
+    this.update()
+  } else {
+    //新建文章
+    this.create()
+  }
+
+}
+
+//修改文章
+function update()
+{
+  this.$axios({
+    method:"put",
+    url:'cms/article/'+this.article.a_id,
+    data:this.article
+  }).then(function(response){
+    let data = response.data
+    if (data.errno == 0) {
+      this.$message({
+        message: data.info,
+        type: 'success'
+      });
+    } else {
+      this.$message({
+        message: data.info,
+        type: 'warning'
+      });
+    }
+  }.bind(this))
+}
+
+//新建文章
+function create()
+{
+  this.$axios({
+    method:"post",
+    url:'cms/article',
+    data:this.article
+  }).then(function(response){
+    let data = response.data
+    if (data.errno == 0) {
+      this.$message({
+        message: data.info,
+        type: 'success'
+      });
+      this.$Vue.set(this.article,'a_id',data.data.a_id)
+      //跳转过去
+      this.$router.push({path:'/blog/article/'+data.data.a_id})
+    } else {
+      this.$message({
+        message: data.info,
+        type: 'warning'
+      });
+    }
+  }.bind(this))
+}
+
 
 </script>
 <style lang="scss" scoped>

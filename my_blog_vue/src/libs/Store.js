@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 let stores = {
 	state: {
 		//接口路径
-		API_URL: 'http://app.douniu.com/index.php/',
+		API_URL: 'http://codingwork.com',
 		// //视图目录
 		// VIEW_PATH: '@/views/',
 		// //组件目录

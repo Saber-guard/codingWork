@@ -9,9 +9,27 @@
     <headLine></headLine>
     <div class="cates">
 		<el-row>
-			<el-col :span="8" v-for="cate in cates" :key="cate.id">
-				<dir :info="cate"></dir>
+			<el-col :span="8">
+        <el-row>
+          <el-col :span="24"  v-for="(cate,index) in cates" :key="cate.c_id">
+            <dir :info="cate" v-if="index%3==0?true:false"></dir>
+          </el-col>
+        </el-row>
 			</el-col>
+      <el-col :span="8">
+        <el-row>
+          <el-col :span="24"  v-for="(cate,index) in cates" :key="cate.c_id">
+            <dir :info="cate" v-if="index%3==1?true:false"></dir>
+          </el-col>
+        </el-row>
+      </el-col>
+      <el-col :span="8">
+        <el-row>
+          <el-col :span="24"  v-for="(cate,index) in cates" :key="cate.c_id">
+            <dir :info="cate" v-if="index%3==2?true:false"></dir>
+          </el-col>
+        </el-row>
+      </el-col>
 		</el-row>
     </div>
 </div>
@@ -27,10 +45,29 @@ import dir from './dir'
 export default {
 	extends:common,
 	name: 'category',
+  created:function()
+  {
+    this.$axios({
+      method:"get",
+      url:'cms/category_list',
+      params:{
+        "parent":1,
+        "select":"title,id,info,alias,pic",
+      }
+    }).then(function (response) {
+      //分割为3个一组
+      // this.cates = this.$func.group(response.data.data,3)
+      this.cates = response.data.data
+      for (var i in this.cates) {
+        this.$Vue.set(this.cates[i],'list',[])
+      }
+
+    }.bind(this))
+  },
 	mounted:function()
-    {
-        this.initStyle();
-    },
+  {
+    this.initStyle();
+  },
 	methods:{
         //初始化一些样式
         initStyle:function initStyle(){
@@ -40,60 +77,7 @@ export default {
 	},
 	data:function(){
 		return {
-			cates:[
-				{
-					id:1,
-					name:'PHP程序设计',
-					desc:'世界上最好的编程语言',
-					memo:'Hypertext Preprocessor',
-					list:[
-						'PHP判断布尔值的一些常见方法',
-						'布尔值在PHP里的更多特性',
-						'TCP keepalive概述',
-						'jQuery获取radio选中项checked',
-						'TCP keepalive概述',
-					],
-				},
-				{
-					id:2,
-					name:'PHP程序设计',
-					desc:'世界上最好的编程语言',
-					memo:'Hypertext Preprocessor',
-					list:[
-						'PHP判断布尔值的一些常见方法',
-						'布尔值在PHP里的更多特性',
-						'TCP keepalive概述',
-						'jQuery获取radio选中项checked',
-						'TCP keepalive概述',
-					],
-				},
-				{
-					id:3,
-					name:'PHP程序设计',
-					desc:'世界上最好的编程语言',
-					memo:'Hypertext Preprocessor',
-					list:[
-						'PHP判断布尔值的一些常见方法',
-						'布尔值在PHP里的更多特性',
-						'TCP keepalive概述',
-						'jQuery获取radio选中项checked',
-						'TCP keepalive概述',
-					],
-				},
-				{
-					id:4,
-					name:'PHP程序设计',
-					desc:'世界上最好的编程语言',
-					memo:'Hypertext Preprocessor',
-					list:[
-						'PHP判断布尔值的一些常见方法',
-						'布尔值在PHP里的更多特性',
-						'TCP keepalive概述',
-						'jQuery获取radio选中项checked',
-						'TCP keepalive概述',
-					],
-				},
-			]
+			cates:[]
 		}
 	},
 	components:{

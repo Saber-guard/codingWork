@@ -4,10 +4,10 @@
      @mouseleave="hiddenStatus(article)">
     <div class="content">
         <div class="pic">
-            <img draggable="false" v-bind:src="article.pic">
+            <img draggable="false" v-bind:src="article.a_pic">
         </div>
-        <div class="describe">&nbsp;&nbsp;<a href="#" v-text="article.describe"></a></div>
-        <div class="title"><a href="#" v-text="article.title"></a></div>
+      <div class="describe">&nbsp;&nbsp;<router-link :to="'/blog/article/'+article.a_id" v-text="article.a_describe"></router-link></div>
+        <div class="title"><router-link :to="'/blog/article/'+article.a_id" v-text="article.a_title"></router-link></div>
     </div>
     <ul class="status" v-bind:class="{on:article.select}">
         <li><a href="#"><i class="fa fa-thumbs-o-down"></i>123</a></li>

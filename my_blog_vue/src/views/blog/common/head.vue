@@ -2,9 +2,9 @@
 <header class="blog-common-head">
 	<nav id="nav">
 		<ul>
-			<li><a href="#" id="nav_current">首页</a></li>
-			<li><a href="/download/" target="_blank">分类列表</a></li>
-			<li><a href="/download/" target="_blank">发表博客</a></li>
+			<li><router-link :to="'/blog/category'" id="nav_current">首页</router-link></li>
+			<li><router-link :to="'/blog/category'">分类列表</router-link></li>
+			<li><router-link :to="'/blog/article/0'">发表博客</router-link></li>
 		</ul>
 	</nav>
 </header>

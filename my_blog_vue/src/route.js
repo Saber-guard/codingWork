@@ -12,6 +12,10 @@ export default [
       	component: aaa,
     },
     {
+      path: '/',
+      redirect: '/blog/category',
+    },
+    {
       	path:'/blog',
         name:'blog',
         component:blog,
@@ -22,12 +26,12 @@ export default [
                 component: blog_category,
             },
             {
-                path: 'list',
+                path: 'list/:id',
                 name: 'list',
                 component: blog_list,
             },
             {
-                path: 'article',
+                path: 'article/:id',
                 name: 'article',
                 component: blog_article,
             },

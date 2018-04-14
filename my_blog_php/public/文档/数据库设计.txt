@@ -1,0 +1,100 @@
+网站基础信息：
+网站名称
+网站简介
+
+
+栏目表：	category
+
+栏目ID		c_id
+父栏目ID	c_parent_id
+父ID路径	c_parent_id_path
+栏目名称	c_title
+栏目别名	c_alias
+栏目简介	c_info
+模型ID关联	c_m_id
+栏目图片	c_pic
+创建时间	c_datetime
+
+
+模型表：	model
+
+模型ID		m_id
+模型名称	m_name
+模型简介	m_info
+
+
+模型字段表：	model_field
+
+ID		mf_id
+关联模型ID	mf_m_id
+字段名称	mf_name
+数据库字段名称	mf_field_name
+字段类型	mf_type
+字段默认值	mf_default
+字段长度	mf_length
+//字段选项 SELECT/SQL/	
+//字段验证规则
+字段注释	mf_info
+
+
+内容主表：	article
+
+内容ID		a_id
+用户ID关联	a_u_id
+栏目ID关联	a_c_id
+标题		a_title
+文本		a_text
+缩略图		a_pic
+简介		a_describe
+创建时间	a_datetime
+
+
+内容评论表：	pinglun
+
+评论ID		p_id
+评论父ID	p_parent_id
+用户ID关联	p_u_id
+内容ID关联	p_a_id
+评论内容	p_info
+评论时间	p_datetime
+
+
+内容点赞表：	zan
+
+点赞ID		z_id
+用户ID关联	z_u_id
+内容ID关联	z_a_id
+点赞时间	z_datetime
+
+
+用户表：	user
+
+用户ID		u_id
+账号		u_account
+密码		u_pwd
+昵称		u_nickname
+人生格言	u_info
+邮箱		u_email
+注册时间	u_datetime
+用户类型（普通用户/管理员）	u_type
+头像地址	u_pic
+
+
+博主简介表：	
+
+
+访客表：
+用户ID
+ip
+agent
+
+
+
+
+
+
+
+
+
+
+

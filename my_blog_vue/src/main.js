@@ -4,6 +4,7 @@ import Router from '@/libs/Route.js'
 import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
+import Func from '@/libs/Func'
 import $ from 'jquery'
 
 
@@ -19,6 +20,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.config.productionTip = true
 Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
+Vue.prototype.$func = Func
 Vue.prototype.$Vue = Vue
 
 //创建Vue实例

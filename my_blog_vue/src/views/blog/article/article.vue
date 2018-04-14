@@ -1,9 +1,10 @@
 <template>
 <div class="blog-article">
-	<edit 	:mode="mode" :article="article"
-			@switch-mode="switchMode"
-			@text-change="textChange"></edit>
-	<show :mode="mode" :article="article" @switch-mode="switchMode"></show>
+	<edit :mode="mode" :article="article"
+        :render_text="render_text"
+			  @switch-mode="switchMode"
+			  @text-change="textChange"></edit>
+	<show :mode="mode" :article="article" :render_text="render_text" @switch-mode="switchMode"></show>
 	<div class="clear"></div>
 </div>
 </template>
@@ -18,6 +19,19 @@ import edit from './edit'
 export default {
 	extends:common,
 	name: 'articlearticle',
+
+  created:function(){
+    //初始化article
+    this.initArticle()
+  },
+
+  watch:{
+	  '$route' (to,from){
+      //初始化article
+      this.initArticle()
+    }
+  },
+
 	mounted:function(){
 		//edit与show保持同高
 		this.heightEQ()
@@ -25,18 +39,12 @@ export default {
 	data:function(){
 		return {
 			'mode':0,//模式：0 查看 1 编辑
-			'article':{
-				'id':1,
-				'title':'PHP是世界上最好的语言',
-				'datetime':'2017-10-10 12:13:14',
-				'zan':123,
-				'look':456,
-				'text':'&nbsp;&nbsp;这个属性是设置背景相关属性的一种快捷的综合写法， 包括background-color, background-image, background-repeat, backgroundattachment, background-position。这个HTML所用的背景属性表示，网页的背景颜色是翠绿色，背景图片是background.jpg图片，背景图片不重复显示，背景图片不随内容滚动而动，背景图片距离网页最左面40px，距离网页最上面100px。',
-				'render':''
-			},
+			'article':{},
+      'render_text':'',
 		}
 	},
 	methods:{
+		initArticle:initArticle,
 		switchMode:switchMode,
 		textChange:textChange,
 		heightEQ:heightEQ,
@@ -45,6 +53,31 @@ export default {
 		show:show,
 		edit:edit,
 	}
+}
+
+//初始化article
+function initArticle()
+{
+  //id为0则为发表新文章
+  if (this.$route.params.id == 0) {
+    this.switchMode(1)
+    this.$Vue.set(this,'article',{})
+    return
+  }
+
+  this.switchMode(0)
+  this.$axios({
+    method:"get",
+    url:'cms/article',
+    params:{
+      "id":this.$route.params.id,
+      "select":"title,text,id,datetime,describe",
+    }
+  }).then(function(response){
+    if (response.data.errno == 0) {
+      this.article = response.data.data
+    }
+  }.bind(this))
 }
 
 //切换模式
@@ -57,8 +90,8 @@ function switchMode(mode)
 //内容被编辑时
 function textChange(param)
 {
-	this.article.text = param.value
-	this.article.render = param.render
+	this.article.a_text = param.value
+	this.render_text = param.render
 }
 
 //edit与show同高

@@ -430,9 +430,10 @@
 }
 
 .show-markdown blockquote {
-    padding: 0 1em;
+    padding: 5px 1em;
     color: #6a737d;
-    border-left: 0.25em solid #dfe2e5;
+    border-left: 0.4em solid #AE8D76;
+    background:#dfe2e5;
 }
 
 .show-markdown blockquote > :first-child {
