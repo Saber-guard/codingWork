@@ -100,3 +100,6 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+#将配置文件去除版本控制
+/my_blog/my_blog/settings.py

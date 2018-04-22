@@ -1,3 +1,2 @@
 # codingWork
-#Django + rest Framework + Vue
-laravel + Vue
+#Django + rest Framework + laravel + Vue
