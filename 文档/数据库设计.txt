@@ -43,6 +43,7 @@ ID
 栏目ID关联	a_c_id
 标题		a_title
 创建时间	a_datetime
+访问量		a_clicks
 
 
 内容评论表：	pinglun

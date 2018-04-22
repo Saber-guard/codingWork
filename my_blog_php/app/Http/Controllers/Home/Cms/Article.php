@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Home\Cms;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article as A;
+use App\Models\ArticleBak;
+use App\Models\Zan;
 
 class Article extends Controller
 {
@@ -59,18 +61,42 @@ class Article extends Controller
 
 		$result = $result->first();
 
+		//访问量+1
+		if ($result) {
+			$result->a_clicks = $result->a_clicks+1;
+			$result->save();
+		}
+
 		//返回
 		return $this->returnInfo($result);
 	}
 
 	//修改文章
-	public function articlePut(Request $request,$id,A $article)
+	public function articlePut(Request $request,$id,A $article,ArticleBak $articleBak)
 	{
 		$param = $this->param;
+
+		//查出文章
+		$tmp = $article ->where('a_id',$id)
+						->first()
+						->toArray();
+		if ($tmp)
+			unset($tmp['a_id']);
 
 		//修改
 		$result = $article 	->where('a_id',$id)
 							->update($param);
+
+
+		//备份原始数据
+		if ($result) {
+			$articleBak->insert([
+				'a_a_id'=>$id,
+				'a_content'=>json_encode($tmp),
+				'a_datetime'=>date('Y-m-d H:i:s'),
+			]);
+		}
+
 		//返回
 		$errno = $result?0:2;
 		$info = $result?'修改成功！':'修改失败！';
@@ -98,5 +124,13 @@ class Article extends Controller
 		$errno = $id?0:2;
 		$info = $id?'添加成功':'添加失败';
 		return $this->returnInfo($data,$errno,$info);
+	}
+
+	//点赞
+	public function zanPut(Request $request,A $article,Zan $zan)
+	{
+		//查询用户
+		
+		return $this->returnInfo([]);
 	}
 }

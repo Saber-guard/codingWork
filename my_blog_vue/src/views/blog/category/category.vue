@@ -47,6 +47,9 @@ export default {
 	name: 'category',
   created:function()
   {
+    //打开动画
+    this.$parent.openAnimation(true)
+    //获取栏目列表
     this.$axios({
       method:"get",
       url:'cms/category_list',

@@ -43,7 +43,7 @@ export default {
   width: 270px;
   height:100%;
   float:right;
-  background: #E8E5DD;
+  background: #FDFDFD;
   box-shadow: #aaa 3px 0px 6px;
   .avatar {
     margin: 20px auto;

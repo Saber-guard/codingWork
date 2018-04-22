@@ -14,7 +14,8 @@ import App from '@/components/App'
 //导入全局样式
 import '@/assets/css/base.css'
 import '@/assets/css/font-awesome.min.css'
-import 'element-ui/lib/theme-chalk/index.css'
+import '@/assets/css/element-css/index.css'// element自定义主题
+// import 'element-ui/lib/theme-chalk/index.css'
 
 //调试模式
 Vue.config.productionTip = true

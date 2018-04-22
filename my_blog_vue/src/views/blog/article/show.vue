@@ -12,12 +12,12 @@
 	</div>
 	<div class="title">
 		<span class="text" v-text="article.a_title"></span>
-		<sub class="fa fa-edit"><a href="javascript:void(0);" @click="edit">编辑</a></sub>
+		<sub class="fa fa-edit" v-if="article.a_u_id && article.a_u_id==common_data.user_info.u_id"><a href="javascript:void(0);" @click="edit">编辑</a></sub>
 	</div>
 	<div class="status">
 		<div v-text="article.a_datetime"></div>
-		<div v-text="'0赞'"></div>
-		<div v-text="'0查看'"></div>
+		<!--<div v-text="'0赞'"></div>-->
+		<div v-if="article.a_clicks" v-text="article.a_clicks+'查看'"></div>
 	</div>
 	<div class="show-markdown" v-html="render_text">
 	</div>

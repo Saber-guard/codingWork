@@ -3,7 +3,10 @@
 //当然，如果session保存到vuex的话除外
 //全局引入vue
 var Cookie={
-  setCookie (c_name, value, expiredays=3600000){
+  //expiredays是以毫秒为单位
+  setCookie (c_name, value, expiredays=86400000){
+    //编码
+    value = encodeURIComponent(JSON.stringify(value));
     var exdate = new Date();　　
     exdate.setTime(exdate.getTime()+expiredays);
     // exdate.setDate(exdate.getDate() + expiredays);
@@ -11,15 +14,19 @@ var Cookie={
   },
   getCookie(name){
     var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-    if (arr = document.cookie.match(reg))
-      return (arr[2]);
-    else
+    if (arr = document.cookie.match(reg)) {
+      //解码
+      var result = JSON.parse(decodeURIComponent(decodeURIComponent(arr[2])))
+
+      return (result);
+    } else {
       return null;
+    }
     },
   delCookie(name){
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
-    var cval = cookie.getCookie(name);
+    var cval = this.getCookie(name);
     if (cval != null)
       document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   }

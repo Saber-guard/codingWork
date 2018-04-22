@@ -2,11 +2,23 @@
 import Vue from 'vue'
 
 export default {
-	data:function (){
-		//先获取store里的数据
-		let common_data = this.$store.state
-
-	    return common_data
-	},
+	// data:function (){
+    // return {
+    //
+    // }
+	// },
+  computed: {
+    //公共配置
+    config:function(){
+      return this.$store.getters.getConfig
+    },
+	  //公共数据
+	  common_data:function(){
+	    return this.$store.getters.getCommonData
+    }
+  },
+  created:function(){
+    this.$store.commit('login')
+  }
 }
 </script>

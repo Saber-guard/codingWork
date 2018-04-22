@@ -5,8 +5,8 @@
     <router-link :to="'/blog/list/'+info.c_id" v-text="info.c_title"></router-link>
 	</div>
 	<div class="list" v-loading="loding">
-		<div class="memo" v-text="info.c_info ? info.c_info : info.c_alias"></div>
-		<!--<div class="desc" v-text="info.c_info"></div>-->
+		<div class="memo" v-text="info.c_alias"></div>
+		<div class="desc" v-text="info.c_info"></div>
 		<div class="article" v-for="article in info.list">
 			<!--<a href="#" v-text="article.a_title"></a>-->
       <router-link :to="'/blog/article/'+article.a_id" v-text="article.a_title"></router-link>

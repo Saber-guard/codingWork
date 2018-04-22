@@ -21,6 +21,8 @@ export default {
 	name: 'articlearticle',
 
   created:function(){
+    //关闭动画
+    this.$parent.openAnimation(false)
     //初始化article
     this.initArticle()
   },
@@ -71,7 +73,7 @@ function initArticle()
     url:'cms/article',
     params:{
       "id":this.$route.params.id,
-      "select":"title,text,id,datetime,describe",
+      "select":"title,text,id,datetime,describe,u_id,clicks",
     }
   }).then(function(response){
     if (response.data.errno == 0) {

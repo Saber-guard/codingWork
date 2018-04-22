@@ -13,6 +13,9 @@ export default {
 			path:this.$route.path,
 	    }
 	},
+  created:function(){
+    console.log(456)
+  },
 	methods: {
 		startHacking () {
 			this.$notify({

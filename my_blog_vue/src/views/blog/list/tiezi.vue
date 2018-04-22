@@ -10,9 +10,9 @@
         <div class="title"><router-link :to="'/blog/article/'+article.a_id" v-text="article.a_title"></router-link></div>
     </div>
     <ul class="status" v-bind:class="{on:article.select}">
-        <li><a href="#"><i class="fa fa-thumbs-o-down"></i>123</a></li>
-        <li><a href="#"><i class="fa fa-thumbs-o-up"></i>123</a></li>
-        <li><a href="#"><i class="fa fa-eye"></i>123</a></li>
+        <!--<li><a href="#"><i class="fa fa-thumbs-o-down"></i>123</a></li>-->
+        <!--<li><a href="#"><i class="fa fa-thumbs-o-up"></i>123</a></li>-->
+        <li><a href="#"><i class="fa fa-eye"></i><span v-text="article.a_clicks"></span></a></li>
     </ul>
 </div>
 </template>

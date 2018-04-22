@@ -29,12 +29,15 @@ export default {
 	  extends:common,
 	  name: 'list',
     created:function() {
+      //打开动画
+      this.$parent.openAnimation(true)
+      //获取栏目信息
       this.$axios({
         method:"get",
         url:'cms/article_list',
         params:{
           "c_id":this.$route.params['id'],
-          "select":"title,id,describe,pic",
+          "select":"title,id,describe,pic,clicks",
           "size":10,
         }
       }).then(function (response) {

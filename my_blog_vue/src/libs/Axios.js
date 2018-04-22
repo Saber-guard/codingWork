@@ -10,7 +10,7 @@ class Axios{
 
     curl(param) {
       var defaultParam = {
-        baseURL:Store.state.API_URL
+        baseURL:Store.state._config.API_URL
       }
 
     	for (var i in param) {

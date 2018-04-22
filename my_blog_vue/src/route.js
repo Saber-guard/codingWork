@@ -1,5 +1,6 @@
 import aaa from '@/views/aaa'
 import bbb from '@/views/bbb'
+import ccc from '@/views/ccc'
 import blog from '@/views/blog/blog'
 import blog_category from '@/views/blog/category/category'
 import blog_list from '@/views/blog/list/list'
@@ -10,6 +11,16 @@ export default [
       	path: '/aaa',
       	name: 'aaa',
       	component: aaa,
+    },
+    {
+        path: '/bbb',
+        name: 'bbb',
+        component: bbb,
+    },
+    {
+        path: '/ccc',
+        name: 'ccc',
+        component: ccc,
     },
     {
       path: '/',
