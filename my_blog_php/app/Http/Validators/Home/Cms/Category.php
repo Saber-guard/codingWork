@@ -7,7 +7,8 @@ class Category extends Validator
 {
 	 public $categoryListGet = [
 		'rule'=>[
-			'page'=>'integer'
+			'parent'=>'integer',
+			'page'=>'integer',
 		],
 		'message'=>[
 		]

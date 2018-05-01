@@ -12,24 +12,23 @@ class User extends Controller
 	{
 		$param = $this->param;
 		$id = 0;
-		if (isset($param['u_account']) && $param['u_account']) {
-			//临时
-			//默认昵称
-			$param['u_nickname'] = $param['u_account'];
-			//邮箱
-			$param['u_email'] = $param['u_account'];
-			//简介
-			$param['u_info'] = '';
-			//注册日期
-			$param['u_datetime'] = date('Y-m-d H:i:s');
-			//用户类型
-			$param['u_type'] = 0;
-			//头像
-			$param['u_pic'] = '';
+		//临时
+		//默认昵称
+		$param['u_nickname'] = $param['u_account'];
+		//邮箱
+		$param['u_email'] = $param['u_account'];
+		//简介
+		$param['u_info'] = '';
+		//注册日期
+		$param['u_datetime'] = date('Y-m-d H:i:s');
+		//用户类型
+		$param['u_type'] = 0;
+		//头像
+		$param['u_pic'] = '';
 
-			//新增数据
-			$id = $user->insertGetId($param);
-		}
+		unset($param['u_pwd2']);
+		//新增数据
+		$id = $user->insertGetId($param);
 
 		//返回
 		$data = $id?['u_id'=>$id]:[];

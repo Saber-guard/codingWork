@@ -1,7 +1,7 @@
 <template>
 <div class="blog-common-leftAside">
     <section class="topspaceinfo">
-        <h1>博客</h1>
+        <h1>coding工坊</h1>
         <p>php是世界上最好的编程语言，没有之一！</p>
     </section>
     <div class="userinfo">

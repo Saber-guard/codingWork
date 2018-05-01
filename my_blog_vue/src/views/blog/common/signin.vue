@@ -7,10 +7,13 @@
                :close-on-click-modal="false">
       <el-form :model="signin_param" class="signin-form">
         <el-form-item >
-          <el-input v-model="signin_param.u_account"></el-input>
+          <el-input v-model="signin_param.u_account" placeholder="请输入邮箱"></el-input>
         </el-form-item>
         <el-form-item >
-          <el-input type="password" v-model="signin_param.u_pwd"></el-input>
+          <el-input type="password" v-model="signin_param.u_pwd" placeholder="请输入密码"></el-input>
+        </el-form-item>
+        <el-form-item >
+          <el-input type="password" v-model="signin_param.u_pwd2" placeholder="请再次输入密码"></el-input>
         </el-form-item>
 
         <el-button type="primary" @click="signin" class="signin-btn">注册</el-button>
@@ -52,6 +55,14 @@
   }
   //注册
   function signin() {
+    if (this.signin_param.u_pwd != this.signin_param.u_pwd2) {
+      this.$message({
+        message: '两次密码不一致',
+        type: 'warning'
+      });
+      return;
+    }
+
     this.$axios({
       method:"post",
       url:'user/user',
@@ -62,6 +73,13 @@
           message: response.data.info,
           type: 'success'
         });
+
+        //回复初始
+        this.signin_param = {
+          u_account:'',
+          u_pwd:'',
+        }
+
         //关闭窗口
         this.showBox(false)
       } else {

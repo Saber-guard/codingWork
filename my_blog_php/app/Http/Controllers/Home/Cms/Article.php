@@ -10,7 +10,7 @@ use App\Models\Zan;
 class Article extends Controller
 {
 	//获取文章列表
-	public function ArticleListGet(Request $request,A $article)
+	public function articleListGet(Request $request,A $article)
 	{
 		$result = $article;
 		//查询条件
@@ -78,25 +78,25 @@ class Article extends Controller
 
 		//查出文章
 		$tmp = $article ->where('a_id',$id)
-						->first()
-						->toArray();
-		if ($tmp)
+						->first();
+		$result = false;
+		if ($tmp) {
+			$tmp = $tmp->toArray();
 			unset($tmp['a_id']);
 
-		//修改
-		$result = $article 	->where('a_id',$id)
-							->update($param);
+			//修改
+			$result = $article 	->where('a_id',$id)
+								->update($param);
 
-
-		//备份原始数据
-		if ($result) {
-			$articleBak->insert([
-				'a_a_id'=>$id,
-				'a_content'=>json_encode($tmp),
-				'a_datetime'=>date('Y-m-d H:i:s'),
-			]);
+			//备份原始数据
+			if ($result) {
+				$articleBak->insert([
+					'a_a_id'=>$id,
+					'a_content'=>json_encode($tmp),
+					'a_datetime'=>date('Y-m-d H:i:s'),
+				]);
+			}
 		}
-
 		//返回
 		$errno = $result?0:2;
 		$info = $result?'修改成功！':'修改失败！';

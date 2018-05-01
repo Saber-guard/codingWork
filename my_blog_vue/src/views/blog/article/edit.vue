@@ -136,13 +136,13 @@ function create()
     url:'cms/article',
     data:this.article
   }).then(function(response){
-    let data = response.data
+    let data = response.data;
     if (data.errno == 0) {
       this.$message({
         message: data.info,
         type: 'success'
       });
-      this.$Vue.set(this.article,'a_id',data.data.a_id)
+      this.$Vue.set(this.article,'a_id',data.data.a_id);
       //跳转过去
       this.$router.push({path:'/blog/article/'+data.data.a_id})
     } else {

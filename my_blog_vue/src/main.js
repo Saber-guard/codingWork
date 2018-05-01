@@ -18,7 +18,7 @@ import '@/assets/css/element-css/index.css'// element自定义主题
 // import 'element-ui/lib/theme-chalk/index.css'
 
 //调试模式
-Vue.config.productionTip = true
+Vue.config.productionTip = Store.state._config.DE_BUG
 Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
 Vue.prototype.$func = Func

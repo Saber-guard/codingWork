@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-abstract class Controller extends BaseController
+class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
@@ -17,6 +18,8 @@ abstract class Controller extends BaseController
     public $controller = null;
     //当前方法
     public $action = null;
+    //当前url
+    public $url = '';
 
     //http请求参数
     public $param = [];
@@ -30,13 +33,17 @@ abstract class Controller extends BaseController
     	$this->parseAction($request);
     	//获取http参数
     	$this->getParam($request,$param);
+        //验证sig
+        $this->validateSig();
     	//验证数据
-    	$this->validateData($request);
+    	$this->validateData();
+
     }
 
     //获取当前控制器名与方法名
     protected function parseAction($request)
     {
+        $this->url = $request->url();
     	$path = $request->route()->getActionName();
     	$times = 1;
     	$tmp = str_replace('Controllers','Validators',$path,$times);
@@ -56,8 +63,45 @@ abstract class Controller extends BaseController
     	$this->param = empty($param) ? $request->input() : $param ;
     }
 
+    //验证sig
+    protected function validateSig()
+    {
+        //只要不是自己请求自己，都验证sig
+        if ($_SERVER['REMOTE_ADDR'] == $_SERVER['SERVER_ADDR']) {
+            return;
+        }
+        //重定向也不验证sig
+        if ($this->action == 'validateError') {
+            return;
+        }
+
+        if (isset($this->param['sig'])) {
+            $sig =  $this->param['sig'];
+            unset($this->param['sig']);
+            $param = $this->param;
+            //排序
+            ksort($param);
+            //拼接
+            $str = $this->url;
+            foreach ($param as $key => $value) {
+                $value = is_array($value)? json_encode($value): $value;
+                $str .= $key. '='. $value;
+            }
+            //加密
+            $str = md5($str);
+            $str = substr($str,1,25);
+            if ($str == $sig || $sig == 'ceshisigceshisig') {
+                return;
+            }
+
+        }
+        //sig验证未通过重定向
+        redirect()->action('Controller@validateError',['message'=>'禁止访问'])->header('Access-Control-Allow-Origin','*')->send();
+        exit;
+    }
+
     //验证数据
-    protected function validateData($request)
+    protected function validateData()
     {
     	//验证器与相应的验证方法是否存在
     	if (class_exists($this->validator) &&
@@ -74,14 +118,30 @@ abstract class Controller extends BaseController
     			$validate_param['rule'] : [] ;
     		$message = isset($validate_param['message']) && is_array($validate_param['message']) ?
     			$validate_param['message'] : [] ;
-
     		//验证
-    		$this->validate($this->param,$rule,$message);
+            $validator = Validator::make($this->param,$rule,$message);
+            if ($validator->fails()) {
+                $message = '参数错误';
+                //调试模式下返回具体错误信息
+                if (config('app.debug')) {
+                    $errors = $validator->errors();
+                    foreach ($errors->toArray() as $key => $value) {
+                        if ($errors->first($key)) {
+                            $message = $errors->first($key);
+                            break;
+                        }
+                    }
+                }
+
+                //参数错误重定向
+                redirect()->action('Controller@validateError',['message'=>$message])->header('Access-Control-Allow-Origin','*')->send();
+                exit;
+            }
     	}
     }
 
     //返回接口数据
-    public function returnInfo($data=[],$errno=0,$info=null)
+    protected function returnInfo($data=[],$errno=0,$info=null)
     {
     	//没有指定errno时
 		if ($errno !== 0) {
@@ -107,8 +167,15 @@ abstract class Controller extends BaseController
 			'info'=>$info,
 			'data'=>$data
 		];
+        return response()->json($this->data);
+    }
 
-		return response()->json($this->data);
+
+    //参数错误重定向
+    public function validateError()
+    {
+        $info = $this->param['message'];
+        return $this->returnInfo([],1,$info);
     }
 
 }

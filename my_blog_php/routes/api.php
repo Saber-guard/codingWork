@@ -16,6 +16,9 @@ Route::get('/', function ()
     return view('welcome');
 });
 
+//表单验证失败重定向
+Route::get('validate_error','Controller@validateError');
+
 //前台接口路由组
 Route::group(['namespace' => 'Home'], function (){
 

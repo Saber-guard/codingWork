@@ -4,6 +4,8 @@ import Cookie from '@/libs/Cookie'
 let stores = {
 	state: {
 	  _config:{
+	    //调试模式
+      DE_BUG:true,
       //接口路径
       API_URL: 'http://codingwork.com',
       // //视图目录

@@ -7,10 +7,10 @@
                :close-on-click-modal="false">
       <el-form :model="login_param" class="login-form">
         <el-form-item >
-          <el-input v-model="login_param.account"></el-input>
+          <el-input v-model="login_param.account" placeholder="请输入邮箱账号"></el-input>
         </el-form-item>
         <el-form-item >
-        <el-input type="password" v-model="login_param.pwd"></el-input>
+        <el-input type="password" v-model="login_param.pwd" placeholder="请输入密码"></el-input>
       </el-form-item>
 
         <el-button type="primary" @click="login" class="login-btn">登陆</el-button>

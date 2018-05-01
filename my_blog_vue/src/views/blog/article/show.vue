@@ -37,7 +37,7 @@ export default {
 	name: 'show',
 	props:['mode','article','render_text'],
     data:function(){
-	      console.log(this.render_text)
+	      // console.log(this.render_text)
         return {
 
         }
