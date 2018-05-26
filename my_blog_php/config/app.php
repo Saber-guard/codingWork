@@ -195,7 +195,5 @@ return [
 
     ],
 
-    //允许跨域请求地址
-    'allow' => 'http://localhost:8080',
 
 ];

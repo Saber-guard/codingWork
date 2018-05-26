@@ -55,7 +55,7 @@ function getSig(defaultParam,type)
   //倒叙
   keys.sort();
   //按照此顺序拼接
-  let str = defaultParam.baseURL+'/'+ defaultParam.url;
+  let str = '/'+ defaultParam.url;
   for (let i in keys) {
     let key = keys[i];
     let value = typeof datas[keys[i]] == 'object' || datas[keys[i]] instanceof Array ?

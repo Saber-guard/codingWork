@@ -20,6 +20,8 @@ class Controller extends BaseController
     public $action = null;
     //当前url
     public $url = '';
+    //当前path
+    public $path = '';
 
     //http请求参数
     public $param = [];
@@ -44,6 +46,7 @@ class Controller extends BaseController
     protected function parseAction($request)
     {
         $this->url = $request->url();
+        $this->path = $request->path();
     	$path = $request->route()->getActionName();
     	$times = 1;
     	$tmp = str_replace('Controllers','Validators',$path,$times);
@@ -82,7 +85,7 @@ class Controller extends BaseController
             //排序
             ksort($param);
             //拼接
-            $str = $this->url;
+            $str = $this->path;
             foreach ($param as $key => $value) {
                 $value = is_array($value)? json_encode($value): $value;
                 $str .= $key. '='. $value;

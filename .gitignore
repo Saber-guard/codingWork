@@ -104,3 +104,4 @@ ENV/
 #将配置文件去除版本控制
 /my_blog/my_blog/settings.py
 /my_blog/my_blog/settings.py
+/my_blog_vue/dist

@@ -8,6 +8,7 @@ let stores = {
       DE_BUG:true,
       //接口路径
       API_URL: 'http://codingwork.com',
+      // API_URL: 'http://api.codingwork.cn',
       // //视图目录
       // VIEW_PATH: '@/views/',
       // //组件目录
