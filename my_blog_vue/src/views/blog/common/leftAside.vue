@@ -5,13 +5,13 @@
         <p>php是世界上最好的编程语言，没有之一！</p>
     </section>
     <div class="userinfo">
-        <p class="q-fans"> 访客：<a href="#">167</a></p>
-        <p class="btns"><a href="#" target="_blank" >私信</a><a href="#" target="_blank">所有博客</a></p>
+        <p class="q-fans"> 访客：<a href="javascript:void(0);" v-text="visitor_num"></a></p>
+        <p class="btns"><a href="javascript:void(0);" target="_blank" >私信</a><a href="javascript:void(0);" target="_blank">所有博客</a></p>
     </div>
     <section class="taglist">
         <h2>个人格言</h2>
         <ul>
-            <li><a href="#">今夕何夕，君已陌路</a></li>
+            <li><a href="javascript:void(0);">今夕何夕，君已陌路</a></li>
         </ul>
     </section>
 </div>
@@ -27,14 +27,32 @@ import common from '@/components/common'
 export default {
 	extends:common,
 	name: 'leftAside',
-    data:function(){
-        return {
-
-        }
-    },
+  created: function(){
+	  this.getVisitorNum()
+  },
+  data:function(){
+      return {
+        visitor_num:0
+      }
+  },
 	methods:{
-
+    getVisitorNum:getVisitorNum,
 	},
+}
+
+function getVisitorNum()
+{
+  this.$axios({
+    method:"get",
+    url:'user/visitor_num',
+    params:{
+      "aa":123
+    }
+  }).then(function (response) {
+    if (response.data.errno == 0) {
+      this.visitor_num = response.data.data.num
+    }
+  }.bind(this))
 }
 
 </script>

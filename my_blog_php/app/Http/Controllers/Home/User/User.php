@@ -12,29 +12,35 @@ class User extends Controller
 	{
 		$param = $this->param;
 		$id = 0;
+
+		//构建用户数据
+		$data = [];
+
+		$data['u_account'] = $param['u_account'];
+		$data['u_pwd'] = $param['u_pwd'];
 		//临时
 		//默认昵称
-		$param['u_nickname'] = $param['u_account'];
+		$data['u_nickname'] = $param['u_account'];
 		//邮箱
-		$param['u_email'] = $param['u_account'];
+		$data['u_email'] = $param['u_account'];
 		//简介
-		$param['u_info'] = '';
+		$data['u_info'] = '';
 		//注册日期
-		$param['u_datetime'] = date('Y-m-d H:i:s');
+		$data['u_datetime'] = date('Y-m-d H:i:s');
 		//用户类型
-		$param['u_type'] = 0;
+		$data['u_type'] = 0;
 		//头像
-		$param['u_pic'] = '';
+		$data['u_pic'] = '';
 
-		unset($param['u_pwd2']);
+
 		//新增数据
-		$id = $user->insertGetId($param);
+		$id = $user->insertGetId($data);
 
 		//返回
-		$data = $id?['u_id'=>$id]:[];
+		$result = $id?['u_id'=>$id]:[];
 		$errno = $id?0:2;
 		$info = $id?'注册成功':'注册失败';
-		return $this->returnInfo($data,$errno,$info);
+		return $this->returnInfo($result,$errno,$info);
 	}
 
 	//获取授权(即登录)

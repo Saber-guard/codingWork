@@ -9,9 +9,23 @@ class Axios{
     }
 
     curl(param) {
+      //method只能是get post put delete
+      if (typeof param['method'] == 'undefined' || (
+          param['method'] != 'get' && param['method'] != 'post' &&
+          param['method'] != 'put' && param['method'] != 'delete'
+        ))
+        param['method'] = 'get'
+
+
+
+
       let defaultParam = {
         baseURL:Store.state._config.API_URL,
       };
+
+      if (param['method'] != 'get') {
+        delete param['params']
+      }
 
     	for (let i in param) {
     	  let value = typeof param[i] == 'object' || param[i] instanceof Array ?
@@ -21,18 +35,38 @@ class Axios{
     	}
 
     	//生成sig
-      if (typeof defaultParam['data'] == 'undefined') {
-    	  //无data无params时
-        if (typeof defaultParam['params'] == 'undefined') {
+      //非get
+      if (defaultParam['method'] != 'get') {
+        //非get请求不允许传param
+        if (typeof defaultParam['params'] != 'undefined') {
+          delete defaultParam.params
+        }
+
+        //必须有data 且为object
+        if (typeof defaultParam['data'] != 'object') {
+          defaultParam.data = {}
+        }
+
+        let sig = getSig(defaultParam,1);
+        defaultParam.data = {
+          sig:sig,
+          data:JSON.stringify(defaultParam.data)
+        }
+
+
+      //get
+      } else {
+        //get必须有params 且为object
+        if (typeof defaultParam['params'] != 'object') {
           defaultParam['params'] = {}
         }
-        //无data有params时
-        defaultParam.params.sig = getSig(defaultParam,0);
-
-      } else {
-    	  //有data时
-        defaultParam.data.sig = getSig(defaultParam,1);
+        let sig = getSig(defaultParam,0);
+        defaultParam.params = {
+          sig:sig,
+          data:JSON.stringify(defaultParam.params)
+        }
       }
+
 
     	return axios(defaultParam).catch(function(error){
     	  //调试模式

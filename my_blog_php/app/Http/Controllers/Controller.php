@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Models\Visitor;
 
 class Controller extends BaseController
 {
@@ -24,17 +25,22 @@ class Controller extends BaseController
     public $path = '';
 
     //http请求参数
-    public $param = [];
+    public $param;
+    public $sig;
 
 
-    public function __construct(array $param=[])
+    public function __construct(array $requestData=[])
     {
 
     	$request = request();
     	//获取当前控制器名与方法名
     	$this->parseAction($request);
+
+        //记录访问
+        $this->recordVisitor();
+
     	//获取http参数
-    	$this->getParam($request,$param);
+    	$this->getParam($request,$requestData);
         //验证sig
         $this->validateSig();
     	//验证数据
@@ -61,9 +67,15 @@ class Controller extends BaseController
     }
 
     //获取http参数
-    protected function getParam($request,$param)
+    protected function getParam($request,$requestData)
     {
-    	$this->param = empty($param) ? $request->input() : $param ;
+        $requestData = empty($requestData) ? $request->input() : $requestData ;
+
+        $this->sig = isset($requestData['sig'])?$requestData['sig']:'';
+        $this->param = isset($requestData['data'])
+                        && json_decode($requestData['data'],true) ?
+                        json_decode($requestData['data'],true):[];
+
     }
 
     //验证sig
@@ -78,9 +90,8 @@ class Controller extends BaseController
             return;
         }
 
-        if (isset($this->param['sig'])) {
-            $sig =  $this->param['sig'];
-            unset($this->param['sig']);
+        if ($this->sig) {
+            $sig =  $this->sig;
             $param = $this->param;
             //排序
             ksort($param);
@@ -99,7 +110,7 @@ class Controller extends BaseController
 
         }
         //sig验证未通过重定向
-        redirect()->action('Controller@validateError',['message'=>'禁止访问'])->header('Access-Control-Allow-Origin','*')->send();
+        $this->redirect('Controller@validateError','禁止访问');
         exit;
     }
 
@@ -137,7 +148,7 @@ class Controller extends BaseController
                 }
 
                 //参数错误重定向
-                redirect()->action('Controller@validateError',['message'=>$message])->header('Access-Control-Allow-Origin','*')->send();
+                $this->redirect('Controller@validateError',$message);
                 exit;
             }
     	}
@@ -179,6 +190,36 @@ class Controller extends BaseController
     {
         $info = $this->param['message'];
         return $this->returnInfo([],1,$info);
+    }
+
+    //记录访问
+    protected function recordVisitor()
+    {
+
+        //构建数据
+        $data = [];
+        $data['v_ip'] = $_SERVER['REMOTE_ADDR'];
+        $data['v_date'] = date('Y-m-d');
+        $data['v_datetime'] = date('Y-m-d H:i:s');
+
+        $visitor = new Visitor;
+        $record = $visitor  ->where('v_ip','=',$data['v_ip'])
+                            ->where('v_date','=',$data['v_date'])
+                            ->first();
+        if (!$record) {
+            $visitor->insertGetId($data);
+        }
+
+    }
+
+    protected function redirect($action,$message)
+    {
+        $data = [
+            'data'=>json_encode(['message'=>$message]),
+        ];
+        redirect()  ->action($action,$data)
+                    ->header('Access-Control-Allow-Origin','*')
+                    ->send();
     }
 
 }

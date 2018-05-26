@@ -5,9 +5,12 @@ Route::group(['namespace' => 'User','prefix' => 'user'], function(){
 	//新增授权(即登录)
 	Route::post('access', 'User@accessPost');
 	//删除授权(即退出)
-	
+
 	//新增用户(注册)
 	Route::post('user', 'User@userPost');
+
+    //获取访问量
+    Route::get('visitor_num', 'Visitor@visitorNumGet');
 });
 
 //cms模块

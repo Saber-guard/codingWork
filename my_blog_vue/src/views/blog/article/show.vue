@@ -84,22 +84,22 @@ function edit()
   }
 
   .title{
-    max-width:1000px;
+    /*max-width:1000px;*/
     margin:0px 60px;
     padding:16px 20px 5px;
-    .text{font-family:幼圆;font-weight: bolder;font-size:26px;letter-spacing:2px;}
+    .text{font-family:幼圆;font-weight: bolder;font-size:35px;letter-spacing:2px;}
     sub{font-size:11px;font-weight: bold;color:#8E6D56;margin:0px 8px;}
   }
 
   .status{
-    max-width:1000px;
+    /*max-width:1000px;*/
     margin:0px 60px;
     padding:4px 20px;
     border-bottom:1px dotted #444;
-    div{display:inline-block;color:#8E6D56;font-weight: bold;font-size:14px;}
+    div{display:inline-block;color:#8E6D56;font-weight: bold;font-size:16px;}
   }
 
-  .show-markdown{max-width:1000px;margin:0px 60px;padding:20px 20px;}
+  .show-markdown{max-width:1000px;margin:0px 60px 300px 60px;padding:20px 20px;}
 }
 .blog-article-show.edit{
   width:55%;

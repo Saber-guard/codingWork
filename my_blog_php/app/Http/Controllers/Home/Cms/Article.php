@@ -76,6 +76,26 @@ class Article extends Controller
 	{
 		$param = $this->param;
 
+		//构建数据库的修改数据
+		$data = [];
+		if (isset($param['a_u_id']))
+			$data['a_u_id'] = $param['a_u_id'];
+		if (isset($param['a_c_id']))
+			$data['a_c_id'] = $param['a_c_id'];
+		if (isset($param['a_title']))
+			$data['a_title'] = $param['a_title'];
+		if (isset($param['a_text']))
+			$data['a_text'] = $param['a_text'];
+		if (isset($param['a_pic']))
+			$data['a_pic'] = $param['a_pic'];
+		if (isset($param['a_describe']))
+			$data['a_describe'] = $param['a_describe'];
+		if (isset($param['a_datetime']))
+			$data['a_datetime'] = $param['a_datetime'];
+		if (isset($param['a_clicks']))
+			$data['a_clicks'] = $param['a_clicks'];
+
+
 		//查出文章
 		$tmp = $article ->where('a_id',$id)
 						->first();
@@ -86,7 +106,7 @@ class Article extends Controller
 
 			//修改
 			$result = $article 	->where('a_id',$id)
-								->update($param);
+								->update($data);
 
 			//备份原始数据
 			if ($result) {
@@ -108,22 +128,24 @@ class Article extends Controller
 	{
 		$param = $this->param;
 
-		//临时
-		//默认作者为1
-		$param['a_u_id'] = 1;
-		//默认图片为http://codingwork.com/upload/pic/2b.jpg
-		$param['a_pic'] = 'http://codingwork.com/upload/pic/2b.jpg';
+		//构建数据库数据
+		$data = [];
 
-		//默认时间
-		$param['a_datetime'] = date('Y-m-d H:i:s');
+		$data['a_u_id'] = 1;
+		$data['a_c_id'] = $param['a_c_id'];
+		$data['a_title'] = $param['a_title'];
+		$data['a_text'] = $param['a_text'];
+		$data['a_pic'] = 'http://codingwork.com/upload/pic/2b.jpg';
+		$data['a_describe'] = $param['a_describe'];
+		$data['a_datetime'] = date('Y-m-d H:i:s');
 
 		//新增数据
-		$id = $article->insertGetId($param);
+		$id = $article->insertGetId($data);
 		//返回
-		$data = $id?['a_id'=>$id]:[];
+		$result = $id?['a_id'=>$id]:[];
 		$errno = $id?0:2;
 		$info = $id?'添加成功':'添加失败';
-		return $this->returnInfo($data,$errno,$info);
+		return $this->returnInfo($result,$errno,$info);
 	}
 
 	//点赞

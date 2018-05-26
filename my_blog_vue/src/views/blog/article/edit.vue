@@ -131,6 +131,7 @@ function update()
 //新建文章
 function create()
 {
+  console.log(this.article)
   this.$axios({
     method:"post",
     url:'cms/article',
