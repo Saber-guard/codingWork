@@ -46,7 +46,7 @@ class Controller extends BaseController
     protected function parseAction($request)
     {
         $this->url = $request->url();
-        $this->path = $request->path();
+        $this->path = '/'. ltrim($request->path(),'/');
     	$path = $request->route()->getActionName();
     	$times = 1;
     	$tmp = str_replace('Controllers','Validators',$path,$times);
