@@ -11,7 +11,7 @@
     <section class="taglist">
         <h2>个人格言</h2>
         <ul>
-            <li><a href="javascript:void(0);">今夕何夕，君已陌路</a></li>
+            <li><a href="javascript:void(0);">任何没有走心的努力，都只是看起来很努力</a></li>
         </ul>
     </section>
 </div>

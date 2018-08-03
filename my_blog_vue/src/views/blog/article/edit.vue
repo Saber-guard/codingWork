@@ -15,6 +15,14 @@
         <el-form-item label="标题">
           <el-input v-model="article.a_title" ></el-input>
         </el-form-item>
+        <el-form-item label="图片">
+          <el-input type="hidden" v-model="article.a_pic" ></el-input>
+          <uploadImg
+            list_type="picture-card"
+            :limit="1"
+            @pic_list_update="picListUpdate"
+            :pic_list="article.a_pic"></uploadImg>
+        </el-form-item>
         <el-form-item label="简介">
           <el-input type="textarea" v-model="article.a_describe"></el-input>
         </el-form-item>
@@ -41,7 +49,9 @@
 @   view:blog-article
  */
 import common from '@/components/common'
-import markdowm from './markdowm'
+import markdowm from './markdown'
+import uploadImg from '@/components/common'
+import UploadImg from "../../../components/uploadImg";
 
 export default {
 	extends:common,
@@ -49,9 +59,13 @@ export default {
 	props:['mode','article','render_text'],
   data:function(){
         return {
-          category_list:[]
+          category_list:[],
         }
   },
+  computed:{
+
+  },
+
   created:function(){
 	  //获取栏目类型列表
     this.$axios({
@@ -67,6 +81,7 @@ export default {
         this.category_list = data.data
       }
     }.bind(this))
+
   },
 	methods:{
 		show:show,
@@ -74,9 +89,11 @@ export default {
 		update:update,
 		create:create,
 		textChange:textChange,//内容改变
+    picListUpdate:picListUpdate,//上传图片列表有变动时同步
 	},
 	components:{
-		markdowm:markdowm,
+    UploadImg,
+    markdowm:markdowm,
 	}
 }
 
@@ -153,6 +170,11 @@ function create()
       });
     }
   }.bind(this))
+}
+
+// 上传图片列表有变动时同步
+function picListUpdate(param){
+  this.article.a_pic = param.pic_list
 }
 
 

@@ -73,7 +73,7 @@ function initArticle()
     url:'cms/article',
     params:{
       "id":this.$route.params.id,
-      "select":"title,text,id,datetime,describe,u_id,clicks",
+      "select":"title,pic,text,id,datetime,describe,u_id,clicks",
     }
   }).then(function(response){
     if (response.data.errno == 0) {

@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Models\Visitor;
+use OSS\OssClient;
 
 class Controller extends BaseController
 {
@@ -35,9 +36,6 @@ class Controller extends BaseController
     	$request = request();
     	//获取当前控制器名与方法名
     	$this->parseAction($request);
-
-        //记录访问
-        $this->recordVisitor();
 
     	//获取http参数
     	$this->getParam($request,$requestData);
@@ -176,6 +174,9 @@ class Controller extends BaseController
 		}
 		if (empty($data)) { $data = (object)array(); }
 
+        //获取oss的文件访问路径
+        $data = $this->getAllOssFile($data);
+
 		$this->data = [
 			'errno'=>$errno,
 			'info'=>$info,
@@ -192,26 +193,6 @@ class Controller extends BaseController
         return $this->returnInfo([],1,$info);
     }
 
-    //记录访问
-    protected function recordVisitor()
-    {
-
-        //构建数据
-        $data = [];
-        $data['v_ip'] = $_SERVER['REMOTE_ADDR'];
-        $data['v_date'] = date('Y-m-d');
-        $data['v_datetime'] = date('Y-m-d H:i:s');
-
-        $visitor = new Visitor;
-        $record = $visitor  ->where('v_ip','=',$data['v_ip'])
-                            ->where('v_date','=',$data['v_date'])
-                            ->first();
-        if (!$record) {
-            $visitor->insertGetId($data);
-        }
-
-    }
-
     protected function redirect($action,$message)
     {
         $data = [
@@ -220,6 +201,32 @@ class Controller extends BaseController
         redirect()  ->action($action,$data)
                     ->header('Access-Control-Allow-Origin','*')
                     ->send();
+    }
+
+    protected function getAllOssFile($data) {
+        if (!($data instanceof \stdClass) && is_object($data)) {
+            $data = $data->toArray($data);
+        }
+
+        $domain = env('OSS_DOMAIN','');
+        $id= env('OSS_ACCESSKEYID','');
+        $key= env('OSS_ACCESSKEYSECRET','');
+        $endpoint = env('OSS_ENDPOINT','');
+        $bucket = 'codingwork';
+        $ossClient = new OssClient($id, $key, $endpoint);
+
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $data[$key] = $this->getAllOssFile($value);
+            } else if (is_string($value)) {
+                if (strpos($value,$domain. '/') !== false && strpos($value,'OSSAccessKeyId') === false) {
+                    $data[$key] = str_replace($domain. '/','',$data[$key]);
+                    $data[$key] = $ossClient->signUrl($bucket, $data[$key] , 600);
+                }
+            }
+        }
+
+        return $data;
     }
 
 }

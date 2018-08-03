@@ -31,4 +31,14 @@ Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
 
 });
 
+//system模块
+Route::group(['namespace' => 'System','prefix' => 'system'], function(){
+    //获取将文件上传到oss的签名
+    Route::get('upload_sig', 'Upload@uploadSigGet');
+
+    //获取oss的文件访问路径
+    Route::get('file_url', 'File@fileUrlGet');
+
+
+});
 

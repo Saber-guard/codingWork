@@ -1,6 +1,8 @@
 <template>
 <div class="blog-category-dir">
-	<div class="pic" :style="'background:url('+info.c_pic+')'"></div>
+	<div class="pic-box" >
+    <img class="pic" :src="info.c_pic" ondragstart="return false">
+  </div>
 	<div class="title">
     <router-link :to="'/blog/list/'+info.c_id" v-text="info.c_title"></router-link>
 	</div>
@@ -59,22 +61,25 @@ export default {
   transition:box-shadow 0.5s;
   -webkit-transition:box-shadow 0.5s;
 
-  .pic{
+  .pic-box{
     border:3px solid #fff;
     border-bottom:0px;
-    height:120px;
-    background:url(/static/images/zhende.jpg);
+    .pic{
+      width:100%;
+    }
   }
 
   .title{
-    position:absolute;
-    top:98px;
+    position:relative;
+    top:-28px;
     padding:0px 10px;
     a{font-size: 18px;font-weight:bold;color:#fff;line-height:23px;text-shadow: 0px 0px 5px #000;}
     a:hover{color:#000;text-shadow: 0px 0px 6px #fff;}
   }
 
   .list{
+    position:relative;
+    top:-20px;
     padding:0px 10px 25px;
     .memo{font-weight:bold;font-size: 14px;}
     .desc{padding-bottom:10px;}
