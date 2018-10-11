@@ -7,8 +7,8 @@ use App\Models\ClientRecord as C;
 
 class Mqtt extends Controller
 {
-    //获取clientID
-    public function mqttClientIdGet(Request $request,C $clientRecord)
+    //新增mqtt连接授权clientID
+    public function mqttClientIdPost(Request $request,C $clientRecord)
     {
         $param = $this->param;
 
@@ -35,6 +35,7 @@ class Mqtt extends Controller
             'ip'=>$client_ip,
             'useragent'=>$client_agent,
             'clientid'=>$clientid.':'.$time,
+            'user'=>$clientid,
         );
 
         //返回
@@ -42,9 +43,28 @@ class Mqtt extends Controller
     }
 
     //获取连接授权
-    public function connectAccessGet()
+    public function connectAccessGet(Request $request,C $clientRecord)
     {
-        
+        $param = $this->param;
+        $ext = 'codingwork';
+        $msg = 'clientID err';
+
+        //检查 client_id username password
+        $client_id = explode(':', $param['client_id'])[0];
+        $record = $clientRecord->where('cr_client_id','=',$client_id)->first();
+        if (!empty($record)) {
+            $msg = 'username err';
+            if ($client_id == $param['username']) {
+                $msg = 'pwd err';
+                if ($param['password'] == md5($param['username'].$ext)) {
+                    $msg = 'succ';
+                }
+            }
+        }
+
+        $errno = $msg == 'succ' ? 0 : 1 ;
+        return $this->returnInfo([],$errno,$msg);
+
     }
 
 }
