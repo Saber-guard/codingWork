@@ -45,7 +45,8 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $e = new NotFoundHttpException($e->getMessage(), $e);
         }
-
+        //允许跨域
+        header('Access-Control-Allow-Origin:*');
         return parent::render($request, $e);
     }
 }

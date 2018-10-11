@@ -39,6 +39,8 @@ Route::group(['namespace' => 'System','prefix' => 'system'], function(){
     //获取oss的文件访问路径
     Route::get('file_url', 'File@fileUrlGet');
 
+    //获取mqtt的clientID
+    Route::get('mqtt_clientid', 'Mqtt@mqttClientIdGet');
 
 });
 

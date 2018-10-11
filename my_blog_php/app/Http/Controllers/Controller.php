@@ -81,7 +81,7 @@ class Controller extends BaseController
     {
         //只要不是自己请求自己，都验证sig
         if ($_SERVER['REMOTE_ADDR'] == $_SERVER['SERVER_ADDR']) {
-            return;
+            // return;
         }
         //重定向也不验证sig
         if ($this->action == 'validateError') {
@@ -175,7 +175,7 @@ class Controller extends BaseController
 		if (empty($data)) { $data = (object)array(); }
 
         //获取oss的文件访问路径
-        $data = $this->getAllOssFile($data);
+        // $data = $this->getAllOssFile($data);
 
 		$this->data = [
 			'errno'=>$errno,
@@ -200,6 +200,7 @@ class Controller extends BaseController
         ];
         redirect()  ->action($action,$data)
                     ->header('Access-Control-Allow-Origin','*')
+                    ->header('Content-type','application/json')
                     ->send();
     }
 
