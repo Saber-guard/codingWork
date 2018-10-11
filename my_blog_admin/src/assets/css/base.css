@@ -1,0 +1,9 @@
+* { margin: 0; padding: 0 }
+body { background: white; font: 12px "宋体", "Arial Narrow", HELVETICA; color: #3F3E3C; line-height: 1.5; }
+img { border: 0; vertical-align: middle }
+p { display: block; }
+ul { list-style: none; }
+a { color: #a6a6a6; text-decoration: none; transition: All 0.5s ease; -webkit-transition: All 0.5s ease; -moz-transition: All 0.5s ease; -o-transition: All 0.5s ease; }
+a:hover { color: #000; }
+.blank { height: 5px; overflow: hidden; width: 100%; margin: auto; clear: both }
+.clear{clear: both;}
