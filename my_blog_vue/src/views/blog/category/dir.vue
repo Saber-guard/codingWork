@@ -28,7 +28,7 @@ export default {
       params:{
         "c_id":this.info['c_id'],
         "select":"title,id",
-        "size":8,
+        "size":20,
       }
     }).then(function (response) {
       this.loding = false
