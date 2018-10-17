@@ -5,6 +5,7 @@ import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
 import Func from '@/libs/Func'
+import Mqtt from '@/libs/Mqtt'
 import $ from 'jquery'
 
 
@@ -19,10 +20,13 @@ import '@/assets/css/element-css/index.css'// element自定义主题
 
 //调试模式
 Vue.config.productionTip = Store.state._config.DE_BUG
+
 Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
 Vue.prototype.$func = Func
 Vue.prototype.$Vue = Vue
+
+console.log(Mqtt)
 
 //创建Vue实例
 new Vue({

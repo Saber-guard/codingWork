@@ -8,6 +8,8 @@ let stores = {
       DE_BUG:process.env.DE_BUG,
       //接口路径
       API_URL: process.env.API_URL,
+      //MQ服务地址
+      MQ_URL: 'mqtt://mq.codingwork.cn:8002',
       // API_URL: 'http://codingwork.com',
       // API_URL: 'http://api.codingwork.cn',
       // //视图目录

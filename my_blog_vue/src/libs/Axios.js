@@ -1,6 +1,6 @@
 import axios from 'axios'
 import Store from '@/libs/Store'
-import md5 from 'js-md5';
+import md5 from 'js-md5'
 
 class Axios{
     // 构造
