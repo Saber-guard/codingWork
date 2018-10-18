@@ -1,5 +1,4 @@
 import axios from 'axios'
-import Store from '@/libs/Store'
 import md5 from 'js-md5'
 
 class Axios{
@@ -20,7 +19,7 @@ class Axios{
 
 
       let defaultParam = {
-        baseURL:Store.state._config.API_URL,
+        baseURL:process.env.API_URL,
       };
 
       if (param['method'] != 'get') {
@@ -70,7 +69,7 @@ class Axios{
 
     	return axios(defaultParam).catch(function(error){
     	  //调试模式
-        if (Store.state._config.DE_BUG) {
+        if (process.env.DE_BUG) {
           console.log(error)
         }
       })

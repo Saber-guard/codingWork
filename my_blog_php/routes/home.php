@@ -35,15 +35,20 @@ Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
 Route::group(['namespace' => 'System','prefix' => 'system'], function(){
     //获取将文件上传到oss的签名
     Route::get('upload_sig', 'Upload@uploadSigGet');
-
     //获取oss的文件访问路径
     Route::get('file_url', 'File@fileUrlGet');
 
     //新增mqtt连接授权clientID
     Route::post('mqtt_clientid', 'Mqtt@mqttClientIdPost');
-
     //获取mqtt的连接授权
     Route::get('mqtt_connect_access', 'Mqtt@connectAccessGet');
+    //获取mqtt发布授权
+    Route::get('mqtt_publish_access', 'Mqtt@publishAccessGet');
+    //获取mqtt订阅授权
+    Route::get('mqtt_subscribe_access', 'Mqtt@subscribeAccessGet');
+
+
+
 
 });
 

@@ -1,12 +1,11 @@
 //导入类库
+import $ from 'jquery'
 import Vue from '@/libs/Vue.js'
 import Router from '@/libs/Route.js'
 import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
 import Func from '@/libs/Func'
-import Mqtt from '@/libs/Mqtt'
-import $ from 'jquery'
 
 
 //导入组件
@@ -25,8 +24,6 @@ Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
 Vue.prototype.$func = Func
 Vue.prototype.$Vue = Vue
-
-console.log(Mqtt)
 
 //创建Vue实例
 new Vue({

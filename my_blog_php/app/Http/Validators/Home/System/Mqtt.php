@@ -5,7 +5,7 @@ use App\Http\Validators\Validator;
 
 class Mqtt extends Validator
 {
-	 public $connectAccessGet = [
+	public $connectAccessGet = [
 		'rule'=>[
 			'client_id'=>'required',
 			'username'=>'required',
@@ -13,6 +13,15 @@ class Mqtt extends Validator
 		],
 		'message'=>[
 			// 'integer'=>'必须为数字',
+		]
+	];
+	public $publishAccessGet = [
+		'rule'=>[
+			'client_id'=>'required',
+			'username'=>'required',
+			'topic'=>'required',
+		],
+		'message'=>[
 		]
 	];
 

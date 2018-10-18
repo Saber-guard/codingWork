@@ -62,9 +62,65 @@ class Mqtt extends Controller
             }
         }
 
-        $errno = $msg == 'succ' ? 0 : 1 ;
+        $errno = $msg == 'succ' ? 0 : 2 ;
         return $this->returnInfo([],$errno,$msg);
 
+    }
+
+    //获取订阅授权
+    public function subscribeAccessGet(Request $request)
+    {
+        $param = $this->param;
+        $msg = 'forbiden';
+
+        //管理后台
+        $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+        if (preg_match($perfix, $param['client_id'])) {
+            $msg = 'succ';
+        }
+
+        //client_id专属频道
+        $perfix = '/^\/personal\/'.$param['client_id'].'$/';
+        if (preg_match($perfix, $param['topic'])) {
+            $msg = 'succ';
+        }
+
+        //client_username专属频道
+        $perfix = '/^\/personal\/'.$param['username'].'$/';
+        if (preg_match($perfix, $param['topic'])) {
+            $msg = 'succ';
+        }
+
+        $errno = $msg == 'succ' ? 0 : 2 ;
+        return $this->returnInfo([],$errno,$msg);
+    }
+
+    //获取发布授权
+    public function publishAccessGet(Request $request)
+    {
+        $param = $this->param;
+        $msg = 'forbiden';
+
+        //管理后台
+        $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+        if (preg_match($perfix, $param['client_id'])) {
+            $msg = 'succ';
+        }
+
+        //client_id专属频道
+        $perfix = '/^\/personal\/'.$param['client_id'].'$/';
+        if (preg_match($perfix, $param['topic'])) {
+            $msg = 'succ';
+        }
+
+        //client_username专属频道
+        $perfix = '/^\/personal\/'.$param['username'].'$/';
+        if (preg_match($perfix, $param['topic'])) {
+            $msg = 'succ';
+        }
+
+        $errno = $msg == 'succ' ? 0 : 2 ;
+        return $this->returnInfo([],$errno,$msg);
     }
 
 }

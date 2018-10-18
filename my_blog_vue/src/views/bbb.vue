@@ -1,6 +1,6 @@
 <template>
 <div class="bbb">
-	<el-button @click="startHacking">Start</el-button>
+123
 </div>
 </template>
 <script>
@@ -10,25 +10,21 @@ export default {
 	name: 'bbb',
 	data:function(){
 	    return {
-			path:this.$route.path,
+
 	    }
 	},
   created:function(){
-    console.log(456)
+
   },
 	methods: {
-		startHacking () {
-			this.$notify({
-				title: 'It works!',
-				type: 'success',
-				message: 'We\'ve laid the ground work for you. It\'s time for you to build something epic!',
-				duration: 5000
-			})
-		}
+
 	}
 }
 </script>
 <style>
-
+.bbb{
+	height:2000px;
+	background:white;
+}
 </style>
 
