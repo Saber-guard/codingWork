@@ -38,7 +38,7 @@ class Article extends Validator
 	public $articlePost = [
 		'rule'=>[
 			'a_c_id'=>'required|integer',
-			'a_title'=>'required|string|between:1,30',
+			'a_title'=>'required|string|between:1,50',
 			'a_text'=>'required|string|between:1,20000',
 			'a_describe'=>'required|string|between:1,200',
 		],

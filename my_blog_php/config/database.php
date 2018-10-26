@@ -63,6 +63,15 @@ return [
             'prefix'    => '',
             'strict'    => false,
         ],
+        'redis' => [
+            'cluster' => false,
+            'default' => [
+                'host'     => env('REDIS_HOST', '127.0.0.1'),
+                'port'     => env('REDIS_PORT', 16379),
+                'database' => 0,
+                'password' => env('REDIS_PASSWORD', ''),
+            ],
+        ],
 
         'pgsql' => [
             'driver'   => 'pgsql',

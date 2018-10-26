@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home\System;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClientRecord as C;
+use Illuminate\Support\Facades\Redis;
 
 class Mqtt extends Controller
 {
@@ -73,6 +74,9 @@ class Mqtt extends Controller
         $param = $this->param;
         $msg = 'forbiden';
 
+        //先判断是否连接
+        $this->isConnect($param['client_id']);
+
         //管理后台
         $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
         if (preg_match($perfix, $param['client_id'])) {
@@ -101,6 +105,9 @@ class Mqtt extends Controller
         $param = $this->param;
         $msg = 'forbiden';
 
+        //先判断是否连接
+        $this->isConnect($param['client_id']);
+
         //管理后台
         $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
         if (preg_match($perfix, $param['client_id'])) {
@@ -121,6 +128,17 @@ class Mqtt extends Controller
 
         $errno = $msg == 'succ' ? 0 : 2 ;
         return $this->returnInfo([],$errno,$msg);
+    }
+
+
+
+
+//=======================================================================================================================================
+    //判断一个client_id当前是否连接
+    public function isConnect($client_id)
+    {
+        $redis = Redis::connection();
+
     }
 
 }
