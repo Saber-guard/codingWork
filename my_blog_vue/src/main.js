@@ -25,13 +25,23 @@ Vue.prototype.$cookie = Cookie
 Vue.prototype.$func = Func
 Vue.prototype.$Vue = Vue
 
-//创建Vue实例
-new Vue({
-	el: '#app',
-	router:Router,
-	store:Store,
-	template: '<App/>',
-	components: {
-		App:App,
+//连上mqtt再创建实例
+let time_id = setInterval(function(){
+	if (Vue.prototype.$Mqtt.status == true) {
+		clearInterval(time_id);
+
+		// 创建Vue实例
+		new Vue({
+			el: '#app',
+			router:Router,
+			store:Store,
+			template: '<App/>',
+			components: {
+				App:App,
+			}
+		})
 	}
-})
+
+},1000);
+
+

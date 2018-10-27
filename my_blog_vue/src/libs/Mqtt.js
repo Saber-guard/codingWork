@@ -14,9 +14,13 @@ let client;
 let subscribe_callback_list = {};
 
 let Mqtt = {
+	//mqtt连接状态
+	status:false,
 
 	//vue的use回调
 	install:function(Vue){
+
+		Vue.prototype.$Mqtt = Mqtt;
 
 		//获取clientid
 		Axios.curl({
@@ -39,8 +43,6 @@ let Mqtt = {
 				client.on('close',closeCallback);
 				client.on('error',errorCallback);
 				client.on('message',messageCallback);
-
-				Vue.prototype.$Mqtt = Mqtt;
 
 			} else {
 				console.log('连接授权获取失败！');
@@ -76,6 +78,8 @@ function connectCallback(){
 	if (process.env.DE_BUG) {
 		console.log('connect');
 	}
+	//连接状态
+	Mqtt.status = true;
 	Mqtt.subscribe('/personal/'+connect_option.clientId,{},function(topic, message,packet){
 		console.log('收到'+topic+'频道的消息');
 	});
@@ -91,9 +95,11 @@ function closeCallback(){
 	if (process.env.DE_BUG) {
 		console.log('close');
 	}
+	Mqtt.status = false;
 }
 //连接失败或发生错误事件回调
 function errorCallback(error){
+	Mqtt.status = false;
 	console.log('error');
 }
 //收到消息事件回调
