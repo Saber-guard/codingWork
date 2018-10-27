@@ -36,7 +36,7 @@ class File extends Controller
 		$mqtt = new Mqtt([]);
 		$client_pre = $mqtt->getClientPre();
 		if ($mqtt->hasClientPreConnect($client_pre)) {
-			$param['path'] = 'http://api.codingwork.cn/system/file?data={"path":"pic/5964473d4e8151.jpg"}';
+			$param['path'] = 'pic/5964473d4e8151.jpg';
 		}
 
 	    $id= env('OSS_ACCESSKEYID','');
