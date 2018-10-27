@@ -154,7 +154,13 @@ class Mqtt extends Controller
     public function hasClientPreConnect($client_pre)
     {
         $keys = Redis::hkeys('mqtt:clients');
-        dd($keys);exit;
+        foreach ($keys as $key) {
+            if (strpos($key,$client_pre.':') === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }
