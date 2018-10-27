@@ -240,4 +240,13 @@ class Controller extends BaseController
         return $data;
     }
 
+    //获取客户端IP
+    protected function getRemoteAddr()
+    {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        return $_SERVER['REMOTE_ADDR'];
+    }
+
 }

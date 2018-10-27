@@ -14,7 +14,7 @@ class Mqtt extends Controller
         $param = $this->param;
 
         $client_agent = $_SERVER['HTTP_USER_AGENT'];
-        $client_ip =  $_SERVER['REMOTE_ADDR'];
+        $client_ip =  $this->getRemoteAddr();
         $time = time();
         //根据访客信息生成对应的client_pre
         $client_pre = $this->getClientPre();
@@ -139,7 +139,7 @@ class Mqtt extends Controller
     public function getClientPre()
     {
         $client_agent = $_SERVER['HTTP_USER_AGENT'];
-        $client_ip =  $_SERVER['REMOTE_ADDR'];
+        $client_ip =  $this->getRemoteAddr();
         return sha1($client_ip.$client_agent);
     }
 

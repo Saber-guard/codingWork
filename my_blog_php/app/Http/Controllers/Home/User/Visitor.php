@@ -19,7 +19,7 @@ class Visitor extends Controller
 	{
         //构建数据
         $data = [];
-        $data['v_ip'] = $_SERVER['REMOTE_ADDR'];
+        $data['v_ip'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
         $data['v_date'] = date('Y-m-d');
         $data['v_datetime'] = date('Y-m-d H:i:s');
 
