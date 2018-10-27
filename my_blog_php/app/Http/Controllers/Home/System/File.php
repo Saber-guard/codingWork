@@ -32,23 +32,23 @@ class File extends Controller
 	{
 		$param = $this->param;
 
-		//判断有无client连接
+		//无client连接都返回同一张图片
 		$mqtt = new Mqtt([]);
 		$client_pre = $mqtt->getClientPre();
 		if ($mqtt->hasClientPreConnect($client_pre)) {
-
-		    $id= env('OSS_ACCESSKEYID','');
-		    $key= env('OSS_ACCESSKEYSECRET','');
-		    $endpoint = env('OSS_ENDPOINT','');
-
-		    $ossClient = new OssClient($id, $key, $endpoint);
-		    $url = $ossClient->signUrl($this->bucket, $param['path'] , 600);
-
-		    //跳转到图片链接
-		    redirect($url)->send();
+			$param['path'] = 'http://api.codingwork.cn/system/file?data={"path":"pic/5964473d4e8151.jpg"}';
 		}
 
-		return $this->returnInfo([],2,'无权访问');
+	    $id= env('OSS_ACCESSKEYID','');
+	    $key= env('OSS_ACCESSKEYSECRET','');
+	    $endpoint = env('OSS_ENDPOINT','');
+
+	    $ossClient = new OssClient($id, $key, $endpoint);
+	    $url = $ossClient->signUrl($this->bucket, $param['path'] , 600);
+
+	    //跳转到图片链接
+	    redirect($url)->send();
+
 	}
 
 
