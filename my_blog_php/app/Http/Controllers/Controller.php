@@ -29,6 +29,11 @@ class Controller extends BaseController
     public $param;
     public $sig;
 
+    //不用验证sig的path列表
+    public $no_sig_path_list = [
+        '/system/file',
+    ];
+
 
     public function __construct(array $requestData=[])
     {
@@ -69,7 +74,9 @@ class Controller extends BaseController
     {
         $requestData = empty($requestData) ? $request->input() : $requestData ;
 
+        //获取sig
         $this->sig = isset($requestData['sig'])?$requestData['sig']:'';
+        //获取请求参数
         $this->param = isset($requestData['data'])
                         && json_decode($requestData['data'],true) ?
                         json_decode($requestData['data'],true):[];
@@ -79,12 +86,16 @@ class Controller extends BaseController
     //验证sig
     protected function validateSig()
     {
-        //只要不是自己请求自己，都验证sig
-        if ($_SERVER['REMOTE_ADDR'] == $_SERVER['SERVER_ADDR']) {
-            // return;
-        }
-        //重定向也不验证sig
+        //重定向不验证
         if ($this->action == 'validateError') {
+            return;
+        }
+        //特殊sig不验证
+        if ($this->sig == 'ceshisigceshisig') {
+            return;
+        }
+        //指定path不验证
+        if (in_array($this->path,$this->no_sig_path_list)) {
             return;
         }
 
@@ -102,10 +113,9 @@ class Controller extends BaseController
             //加密
             $str = md5($str);
             $str = substr($str,1,25);
-            if ($str == $sig || $sig == 'ceshisigceshisig') {
+            if ($str == $sig) {
                 return;
             }
-
         }
         //sig验证未通过重定向
         $this->redirect('Controller@validateError','禁止访问');
@@ -200,7 +210,7 @@ class Controller extends BaseController
         ];
         redirect()  ->action($action,$data)
                     ->header('Access-Control-Allow-Origin','*')
-                    ->header('Content-type','application/json')
+                    // ->header('Content-type','application/json')
                     ->send();
     }
 

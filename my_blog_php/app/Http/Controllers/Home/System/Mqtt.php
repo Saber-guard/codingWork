@@ -16,12 +16,13 @@ class Mqtt extends Controller
         $client_agent = $_SERVER['HTTP_USER_AGENT'];
         $client_ip =  $_SERVER['REMOTE_ADDR'];
         $time = time();
-        $clientid = sha1($client_ip.$client_agent);
+        //根据访客信息生成对应的client_pre
+        $client_pre = $this->getClientPre();
 
-        $record = $clientRecord->where('cr_client_id','=',$clientid)->first();
+        $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
         if (empty($record)) {
             $data['cr_ip'] = $client_ip;
-            $data['cr_client_id'] = $clientid;
+            $data['cr_client_pre'] = $client_pre;
             $data['cr_user_agent'] = $client_agent;
             $data['cr_datetime'] = date('Y-m-d H:i:s',$time);
             //新增数据
@@ -35,8 +36,8 @@ class Mqtt extends Controller
         $response = array(
             'ip'=>$client_ip,
             'useragent'=>$client_agent,
-            'clientid'=>$clientid.':'.$time,
-            'user'=>$clientid,
+            'clientid'=>$client_pre.':'.$time,
+            'user'=>$client_pre,
         );
 
         //返回
@@ -51,11 +52,11 @@ class Mqtt extends Controller
         $msg = 'clientID err';
 
         //检查 client_id username password
-        $client_id = explode(':', $param['client_id'])[0];
-        $record = $clientRecord->where('cr_client_id','=',$client_id)->first();
+        $client_pre = explode(':', $param['client_id'])[0];
+        $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
         if (!empty($record)) {
             $msg = 'username err';
-            if ($client_id == $param['username']) {
+            if ($client_pre == $param['username']) {
                 $msg = 'pwd err';
                 if ($param['password'] == md5($param['username'].$ext)) {
                     $msg = 'succ';
@@ -75,24 +76,24 @@ class Mqtt extends Controller
         $msg = 'forbiden';
 
         //先判断是否连接
-        $this->isConnect($param['client_id']);
+        if ($this->hasClientIdConnect($param['client_id'])) {
+            //管理后台
+            $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+            if (preg_match($perfix, $param['client_id'])) {
+                $msg = 'succ';
+            }
 
-        //管理后台
-        $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
-        if (preg_match($perfix, $param['client_id'])) {
-            $msg = 'succ';
-        }
+            //client_id专属频道
+            $perfix = '/^\/personal\/'.$param['client_id'].'$/';
+            if (preg_match($perfix, $param['topic'])) {
+                $msg = 'succ';
+            }
 
-        //client_id专属频道
-        $perfix = '/^\/personal\/'.$param['client_id'].'$/';
-        if (preg_match($perfix, $param['topic'])) {
-            $msg = 'succ';
-        }
-
-        //client_username专属频道
-        $perfix = '/^\/personal\/'.$param['username'].'$/';
-        if (preg_match($perfix, $param['topic'])) {
-            $msg = 'succ';
+            //client_username专属频道
+            $perfix = '/^\/personal\/'.$param['username'].'$/';
+            if (preg_match($perfix, $param['topic'])) {
+                $msg = 'succ';
+            }
         }
 
         $errno = $msg == 'succ' ? 0 : 2 ;
@@ -106,24 +107,24 @@ class Mqtt extends Controller
         $msg = 'forbiden';
 
         //先判断是否连接
-        $this->isConnect($param['client_id']);
+        if ($this->hasClientIdConnect($param['client_id'])) {
+            //管理后台
+            $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+            if (preg_match($perfix, $param['client_id'])) {
+                $msg = 'succ';
+            }
 
-        //管理后台
-        $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
-        if (preg_match($perfix, $param['client_id'])) {
-            $msg = 'succ';
-        }
+            //client_id专属频道
+            $perfix = '/^\/personal\/'.$param['client_id'].'$/';
+            if (preg_match($perfix, $param['topic'])) {
+                $msg = 'succ';
+            }
 
-        //client_id专属频道
-        $perfix = '/^\/personal\/'.$param['client_id'].'$/';
-        if (preg_match($perfix, $param['topic'])) {
-            $msg = 'succ';
-        }
-
-        //client_username专属频道
-        $perfix = '/^\/personal\/'.$param['username'].'$/';
-        if (preg_match($perfix, $param['topic'])) {
-            $msg = 'succ';
+            //client_username专属频道
+            $perfix = '/^\/personal\/'.$param['username'].'$/';
+            if (preg_match($perfix, $param['topic'])) {
+                $msg = 'succ';
+            }
         }
 
         $errno = $msg == 'succ' ? 0 : 2 ;
@@ -134,11 +135,26 @@ class Mqtt extends Controller
 
 
 //=======================================================================================================================================
-    //判断一个client_id当前是否连接
-    public function isConnect($client_id)
+    //根据访客信息生成对应的client_pre
+    public function getClientPre()
     {
-        $redis = Redis::connection();
+        $client_agent = $_SERVER['HTTP_USER_AGENT'];
+        $client_ip =  $_SERVER['REMOTE_ADDR'];
+        return sha1($client_ip.$client_agent);
+    }
 
+    //判断一个client_id当前是否连接
+    public function hasClientIdConnect($client_id)
+    {
+        $client = Redis::hget('mqtt:clients',$client_id);
+        return empty($client)?false:true;
+    }
+
+    //判断一个client_pre当前是否有连接
+    public function hasClientPreConnect($client_pre)
+    {
+        $keys = Redis::hkeys('mqtt:clients');
+        dd($keys);exit;
     }
 
 }

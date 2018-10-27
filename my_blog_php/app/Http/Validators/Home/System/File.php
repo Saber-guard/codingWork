@@ -14,4 +14,13 @@ class File extends Validator
 		]
 	];
 
+	public $fileGet = [
+		'rule'=>[
+			'path'=>'required',
+		],
+		'message'=>[
+			// 'integer'=>'必须为数字',
+		]
+	];
+
 }
