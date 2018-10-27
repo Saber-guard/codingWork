@@ -35,7 +35,7 @@ class File extends Controller
 		//无client连接都返回同一张图片
 		$mqtt = new Mqtt([]);
 		$client_pre = $mqtt->getClientPre();
-		if ($mqtt->hasClientPreConnect($client_pre)) {
+		if (!$mqtt->hasClientPreConnect($client_pre)) {
 			$param['path'] = 'pic/5964473d4e8151.jpg';
 		}
 
