@@ -41,6 +41,10 @@ class Mqtt extends Controller
             'user'=>$client_pre,
         );
 
+        //设置cookie
+        session(['client_id' => $response['clientid']]);
+        session()->save();
+
         //返回
         return $this->returnInfo($response,0,'成功');
     }
@@ -61,10 +65,6 @@ class Mqtt extends Controller
                 $msg = 'pwd err';
                 if ($param['password'] == md5($param['username'].$ext)) {
                     $msg = 'succ';
-
-                    //设置cookie
-                    session(['client_id' => $param['client_id']]);
-                    session()->save();
                 }
             }
         }
