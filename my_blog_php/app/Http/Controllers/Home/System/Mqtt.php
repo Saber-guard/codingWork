@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ClientRecord as C;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Cookie;
 
 class Mqtt extends Controller
 {
@@ -60,6 +61,10 @@ class Mqtt extends Controller
                 $msg = 'pwd err';
                 if ($param['password'] == md5($param['username'].$ext)) {
                     $msg = 'succ';
+
+                    //设置cookie
+                    session(['client_id' => $param['client_id']]);
+                    session()->save();
                 }
             }
         }
