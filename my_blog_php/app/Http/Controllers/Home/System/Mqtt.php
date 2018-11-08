@@ -161,28 +161,6 @@ class Mqtt extends Controller
         return $this->returnInfo([],$errno,$msg);
     }
 
-    //client连接回调
-    public function connectCallbackGet()
-    {
-        $param = $this->param;
-
-        $client_id = $param['client_id'];
-        //当前连接客户端数
-        $len = Redis::hlen('mqtt:clients');
-
-        //
-        $this->connect();
-    }
-
-    //client断开回调
-    public function closeCallbackGet()
-    {
-        $param = $this->param;
-
-        $client_id = $param['client_id'];
-
-        $len = Redis::hlen('mqtt:clients');
-    }
 
 //=======================================================================================================================================
     //根据访客信息生成对应的client_pre
@@ -213,15 +191,17 @@ class Mqtt extends Controller
         return false;
     }
 
+    //连接
     public function connect()
     {
-        $server = "mqtt.lchtime.cn";
-        $port = 1883;
+        $server = env('MQTT_DOMAIN');
+        $port = env('MQTT_PORT');
         $client_id = $this->publish_pre. ":". time() .mt_rand(10000,99999);
         $username = md5($client_id);
         $password = md5($client_id);
-        $phpMQTT = new phpMQTT($server, $port, $client_id);
-        $phpMQTT->connect(true, NULL, $username, $password);
+        $php_mqtt = new phpMQTT($server, $port, $client_id);
+        $php_mqtt->connect(true, NULL, $username, $password);
+        return $php_mqtt;
     }
 
 }
