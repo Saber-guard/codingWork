@@ -209,7 +209,7 @@ class Controller extends BaseController
             'data'=>json_encode(['message'=>$message]),
         ];
         redirect()  ->action($action,$data)
-                    ->header('Access-Control-Allow-Origin','*')
+                    ->header('Access-Control-Allow-Origin',env('APP_ALLOW','http://localhost:8080'))
                     // ->header('Content-type','application/json')
                     ->send();
     }

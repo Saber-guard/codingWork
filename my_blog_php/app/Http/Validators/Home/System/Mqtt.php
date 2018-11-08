@@ -24,5 +24,19 @@ class Mqtt extends Validator
 		'message'=>[
 		]
 	];
+	public $connectCallbackGet = [
+		'rule'=>[
+			'client_id'=>'required',
+		],
+		'message'=>[
+		]
+	];
+	public $closeCallbackGet = [
+		'rule'=>[
+			'client_id'=>'required',
+		],
+		'message'=>[
+		]
+	];
 
 }

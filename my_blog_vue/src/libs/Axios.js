@@ -1,6 +1,9 @@
 import axios from 'axios'
 import md5 from 'js-md5'
 
+//axios开启session
+axios.defaults.withCredentials = true;
+
 class Axios{
     // 构造
     constructor(){

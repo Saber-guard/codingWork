@@ -49,6 +49,10 @@ Route::group(['namespace' => 'System','prefix' => 'system'], function(){
     Route::get('mqtt_publish_access', 'Mqtt@publishAccessGet');
     //获取mqtt订阅授权
     Route::get('mqtt_subscribe_access', 'Mqtt@subscribeAccessGet');
+    //client连接回调
+    Route::get('mqtt_connect_callback', 'Mqtt@connectCallbackGet');
+    //client断开回调
+    Route::get('mqtt_close_callback', 'Mqtt@closeCallbackGet');
 
 
 

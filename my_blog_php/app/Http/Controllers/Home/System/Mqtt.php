@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\ClientRecord as C;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Cookie;
+use App\Libs\mqtt\phpMQTT;
 
 class Mqtt extends Controller
 {
+    //发布客户端id的前缀
+    public $publish_pre = "codingwork_publish";
+
     //新增mqtt连接授权clientID
     public function mqttClientIdPost(Request $request,C $clientRecord)
     {
@@ -54,20 +58,35 @@ class Mqtt extends Controller
     {
         $param = $this->param;
         $ext = 'codingwork';
-        $msg = 'clientID err';
+        $msg = 'err';
 
         //检查 client_id username password
         $client_pre = explode(':', $param['client_id'])[0];
-        $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
-        if (!empty($record)) {
+        //发布客户端
+        if ($client_pre == $this->publish_pre) {
             $msg = 'username err';
-            if ($client_pre == $param['username']) {
+            if ($param['username'] == md5($param['client_id'])) {
                 $msg = 'pwd err';
-                if ($param['password'] == md5($param['username'].$ext)) {
+                if ($param['password'] == md5($param['client_id'])) {
                     $msg = 'succ';
                 }
             }
         }
+        //普通客户端
+        else {
+            $msg = 'clientID err';
+            $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
+            if (!empty($record)) {
+                $msg = 'username err';
+                if ($client_pre == $param['username']) {
+                    $msg = 'pwd err';
+                    if ($param['password'] == md5($param['username'].$ext)) {
+                        $msg = 'succ';
+                    }
+                }
+            }
+        }
+
 
         $errno = $msg == 'succ' ? 0 : 2 ;
         return $this->returnInfo([],$errno,$msg);
@@ -83,7 +102,7 @@ class Mqtt extends Controller
         //先判断是否连接
         if ($this->hasClientIdConnect($param['client_id'])) {
             //管理后台
-            $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+            $perfix = '/^codingwork_admin:(\d)+_(\d){10}/';
             if (preg_match($perfix, $param['client_id'])) {
                 $msg = 'succ';
             }
@@ -111,10 +130,16 @@ class Mqtt extends Controller
         $param = $this->param;
         $msg = 'forbiden';
 
-        //先判断是否连接
+        //发布客户端
+        $perfix = '/^'.$this->publish_pre.':(\d)+/';
+        if (preg_match($perfix, $param['client_id'])) {
+            $msg = 'succ';
+        }
+
+        //其他先判断是否连接
         if ($this->hasClientIdConnect($param['client_id'])) {
             //管理后台
-            $perfix = '/^codingwork_admin_(\d)+_(\d){10}/';
+            $perfix = '/^codingwork_admin:(\d)+_(\d){10}/';
             if (preg_match($perfix, $param['client_id'])) {
                 $msg = 'succ';
             }
@@ -136,6 +161,28 @@ class Mqtt extends Controller
         return $this->returnInfo([],$errno,$msg);
     }
 
+    //client连接回调
+    public function connectCallbackGet()
+    {
+        $param = $this->param;
+
+        $client_id = $param['client_id'];
+        //当前连接客户端数
+        $len = Redis::hlen('mqtt:clients');
+
+        //
+        $this->connect();
+    }
+
+    //client断开回调
+    public function closeCallbackGet()
+    {
+        $param = $this->param;
+
+        $client_id = $param['client_id'];
+
+        $len = Redis::hlen('mqtt:clients');
+    }
 
 //=======================================================================================================================================
     //根据访客信息生成对应的client_pre
@@ -164,6 +211,17 @@ class Mqtt extends Controller
         }
 
         return false;
+    }
+
+    public function connect()
+    {
+        $server = "mqtt.lchtime.cn";
+        $port = 1883;
+        $client_id = $this->publish_pre. ":". time() .mt_rand(10000,99999);
+        $username = md5($client_id);
+        $password = md5($client_id);
+        $phpMQTT = new phpMQTT($server, $port, $client_id);
+        $phpMQTT->connect(true, NULL, $username, $password);
     }
 
 }
