@@ -5,7 +5,7 @@
         <p>php是世界上最好的编程语言，没有之一！</p>
     </section>
     <div class="userinfo">
-        <p class="q-fans"> 访客：<a href="javascript:void(0);" v-text="visitor_num"></a></p>
+        <p class="q-fans"> 在线人数：<a href="javascript:void(0);" v-text="visitor_num"></a></p>
         <p class="btns"><a href="javascript:void(0);" target="_blank" >私信</a><a href="javascript:void(0);" target="_blank">所有博客</a></p>
     </div>
     <section class="taglist">
@@ -28,7 +28,8 @@ export default {
 	extends:common,
 	name: 'leftAside',
   created: function(){
-	  this.getVisitorNum()
+    //订阅/public/online频道
+    this.$Mqtt.subscribe('/public/online',{},this.public_online_callback);
   },
   data:function(){
       return {
@@ -36,23 +37,13 @@ export default {
       }
   },
 	methods:{
-    getVisitorNum:getVisitorNum,
+      public_online_callback:public_online_callback,
 	},
 }
 
-function getVisitorNum()
-{
-  this.$axios({
-    method:"get",
-    url:'user/visitor_num',
-    params:{
-      "aa":123
-    }
-  }).then(function (response) {
-    if (response.data.errno == 0) {
-      this.visitor_num = response.data.data.num
-    }
-  }.bind(this))
+function public_online_callback(topic,msg,packet){
+        msg = parseInt(msg.toString());
+        this.visitor_num = typeof msg == 'number' ? msg : 0;
 }
 
 </script>
