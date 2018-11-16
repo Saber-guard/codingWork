@@ -25,8 +25,10 @@ class Category extends Controller
 			$selects = array_map(function($item){
 				return 'c_'. $item;
 			},$selects);
-			$result = $result->select(...$selects);
+		} else {
+			$selects = ['c_title'];
 		}
+		$result = $result->select(...$selects);
 		//分页
 		$size = $this->param['size'] ?? 10 ;
 		$result = $result->paginate($size);
@@ -36,9 +38,25 @@ class Category extends Controller
 	}
 
 	//获取栏目详情
-	public function categoryGet()
+	public function categoryGet(Request $request,C $category)
 	{
+        $param = $this->param;
 
+		$result = $category;
+		$result = $result->where('c_id','=',$param['id']);
+		//指定字段
+		if (isset($this->param['select'])) {
+			$selects = explode(',',$this->param['select']);
+			$selects = array_map(function($item){
+				return 'c_'. $item;
+			},$selects);
+		} else {
+			$selects = ['c_title'];
+		}
+		$result = $result->select(...$selects);
+		$result = $result->first();
+
+		return $this->returnInfo($result);
 	}
 
 

@@ -17,6 +17,8 @@ Route::group(['namespace' => 'User','prefix' => 'user'], function(){
 Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
 	//目录列表
     Route::get('category_list', 'Category@categoryListGet');
+    //栏目详情
+    Route::get('category', 'Category@categoryGet');
 
     //文章列表
     Route::get('article_list', 'Article@articleListGet');
@@ -49,10 +51,8 @@ Route::group(['namespace' => 'System','prefix' => 'system'], function(){
     Route::get('mqtt_publish_access', 'Mqtt@publishAccessGet');
     //获取mqtt订阅授权
     Route::get('mqtt_subscribe_access', 'Mqtt@subscribeAccessGet');
-    //client连接回调
-    Route::get('mqtt_connect_callback', 'Mqtt@connectCallbackGet');
-    //client断开回调
-    Route::get('mqtt_close_callback', 'Mqtt@closeCallbackGet');
+    //获取客户端连接数
+    Route::get('mqtt_client_count', 'Mqtt@clientCountGet');
 
 
 

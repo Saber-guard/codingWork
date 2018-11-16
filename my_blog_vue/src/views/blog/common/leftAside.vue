@@ -6,7 +6,10 @@
     </section>
     <div class="userinfo">
         <p class="q-fans"> 在线人数：<a href="javascript:void(0);" v-text="visitor_num"></a></p>
-        <p class="btns"><a href="javascript:void(0);" target="_blank" >私信</a><a href="javascript:void(0);" target="_blank">所有博客</a></p>
+        <p class="btns">
+          <a href="javascript:void(0);" target="_blank" >私信</a>
+          <router-link :to="'/blog/category'" >所有博客</router-link>
+          </p>
     </div>
     <section class="taglist">
         <h2>个人格言</h2>
@@ -28,6 +31,8 @@ export default {
 	extends:common,
 	name: 'leftAside',
   created: function(){
+    //获取当前在线人数
+    this.getClientCount()
     //订阅/public/online频道
     this.$Mqtt.subscribe('/public/online',{},this.public_online_callback);
   },
@@ -38,6 +43,7 @@ export default {
   },
 	methods:{
       public_online_callback:public_online_callback,
+      getClientCount:getClientCount,
 	},
 }
 
@@ -45,6 +51,22 @@ function public_online_callback(topic,msg,packet){
         msg = parseInt(msg.toString());
         this.visitor_num = typeof msg == 'number' ? msg : 0;
 }
+
+function getClientCount()
+{
+  this.$axios({
+    method:"get",
+    url:'system/mqtt_client_count',
+    params:{}
+  }).then(function (response) {
+    if (response.data.errno == 0) {
+      this.visitor_num = response.data.data.count
+    }
+  }.bind(this))
+
+}
+
+
 
 </script>
 <style lang="scss" scoped>

@@ -2,11 +2,11 @@
 <div class="blog-article-show" :class="{edit:mode==1}">
 	<div class="nav">
 		<div class="dir-line">
-			<a href="#">首页</a>
+      <router-link :to="'/blog/category'" >首页</router-link>
 			<i class="fa fa-angle-right"></i>
 		</div>
-		<div class="dir-line">
-			<a href="#">PHP</a>
+		<div class="dir-line" v-if="category.c_id">
+      <router-link :to="'/blog/list/'+category.c_id" v-text="category.c_title" ></router-link>
 			<i class="fa fa-angle-right"></i>
 		</div>
 	</div>
@@ -39,12 +39,30 @@ export default {
     data:function(){
 	      // console.log(this.render_text)
         return {
-
+          category:{}
         }
     },
 	methods:{
 		edit:edit,
 	},
+  mounted:function(){
+    //获取栏目属性
+    this.$axios({
+      method:"get",
+      url:'cms/category',
+      params:{
+        //"id":this.article.a_c_id,
+        "id":2,
+        "select":"id,title,alias,info",
+      }
+    }).then(function (response) {
+      let data = response.data
+      if (data.errno == 0) {
+        this.category = data.data
+      }
+    }.bind(this))
+
+  },
 }
 
 //切换到编辑模式

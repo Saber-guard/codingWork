@@ -30,6 +30,7 @@ export default [
       	path:'/blog',
         name:'blog',
         component:blog,
+        redirect: '/blog/category',
         children:[
             {
                 path: 'category',

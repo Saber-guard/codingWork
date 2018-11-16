@@ -12,6 +12,14 @@ class Mqtt extends Controller
 {
     //发布客户端id的前缀
     public $publish_pre = "codingwork_publish";
+    //公共发布频道
+    public $public_publish_list = [
+
+    ];
+    //公共订阅频道
+    public $public_subscribe_list = [
+        '/public/online',
+    ];
 
     //新增mqtt连接授权clientID
     public function mqttClientIdPost(Request $request,C $clientRecord)
@@ -87,8 +95,17 @@ class Mqtt extends Controller
             }
         }
 
+        if ($msg == 'succ') {
+            $errno = 0;
+            //初始化可订阅列表
 
-        $errno = $msg == 'succ' ? 0 : 2 ;
+            //初始化可发布列表
+
+        } else {
+            $errno =  2 ;
+        }
+
+
         return $this->returnInfo([],$errno,$msg);
 
     }
@@ -99,7 +116,12 @@ class Mqtt extends Controller
         $param = $this->param;
         $msg = 'forbiden';
 
-        //先判断是否连接
+        //公共订阅频道
+        if (in_array( $param['topic'],$this->public_subscribe_list)) {
+            $msg = 'succ';
+        }
+
+        //判断是否连接
         if ($this->hasClientIdConnect($param['client_id'])) {
             //管理后台
             $perfix = '/^codingwork_admin:(\d)+_(\d){10}/';
@@ -130,6 +152,11 @@ class Mqtt extends Controller
         $param = $this->param;
         $msg = 'forbiden';
 
+        //公共发布频道
+        if (in_array( $param['topic'],$this->public_publish_list)) {
+            $msg = 'succ';
+        }
+
         //发布客户端
         $perfix = '/^'.$this->publish_pre.':(\d)+/';
         if (preg_match($perfix, $param['client_id'])) {
@@ -159,6 +186,15 @@ class Mqtt extends Controller
 
         $errno = $msg == 'succ' ? 0 : 2 ;
         return $this->returnInfo([],$errno,$msg);
+    }
+
+    //获取当前客户端连接数目
+    public function clientCountGet()
+    {
+        $param = $this->param;
+        $count = Redis::hlen('mqtt:clients');
+
+        return $this->returnInfo(['count'=>$count],0);
     }
 
 
