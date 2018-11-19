@@ -11,64 +11,69 @@ class Axios{
     }
 
     curl(param) {
-      //method只能是get post put delete
-      if (typeof param['method'] == 'undefined' || (
-          param['method'] != 'get' && param['method'] != 'post' &&
-          param['method'] != 'put' && param['method'] != 'delete'
-        ))
-        param['method'] = 'get'
 
+      let defaultParam
+      //调用的非本网站api
+      if (param.not_api) {
+        defaultParam = param
 
-
-
-      let defaultParam = {
-        baseURL:process.env.API_URL,
-      };
-
-      if (param['method'] != 'get') {
-        delete param['params']
-      }
-
-    	for (let i in param) {
-    	  let value = typeof param[i] == 'object' || param[i] instanceof Array ?
-          JSON.parse(JSON.stringify(param[i])) : param[i];
-
-        defaultParam[i] = value;
-    	}
-
-    	//生成sig
-      //非get
-      if (defaultParam['method'] != 'get') {
-        //非get请求不允许传param
-        if (typeof defaultParam['params'] != 'undefined') {
-          delete defaultParam.params
-        }
-
-        //必须有data 且为object
-        if (typeof defaultParam['data'] != 'object') {
-          defaultParam.data = {}
-        }
-
-        let sig = getSig(defaultParam,1);
-        defaultParam.data = {
-          sig:sig,
-          data:JSON.stringify(defaultParam.data)
-        }
-
-
-      //get
       } else {
-        //get必须有params 且为object
-        if (typeof defaultParam['params'] != 'object') {
-          defaultParam['params'] = {}
-        }
-        let sig = getSig(defaultParam,0);
-        defaultParam.params = {
-          sig:sig,
-          data:JSON.stringify(defaultParam.params)
-        }
-      }
+        //method只能是get post put delete
+        if (typeof param['method'] == 'undefined' || (
+            param['method'] != 'get' && param['method'] != 'post' &&
+            param['method'] != 'put' && param['method'] != 'delete'
+          ))
+          param['method'] = 'get'
 
+        defaultParam = {
+          baseURL:process.env.API_URL,
+        };
+
+        if (param['method'] != 'get') {
+          delete param['params']
+        }
+
+        for (let i in param) {
+          let value = typeof param[i] == 'object' || param[i] instanceof Array ?
+            JSON.parse(JSON.stringify(param[i])) : param[i];
+
+          defaultParam[i] = value;
+        }
+
+        //生成sig
+        //非get
+        if (defaultParam['method'] != 'get') {
+          //非get请求不允许传param
+          if (typeof defaultParam['params'] != 'undefined') {
+            delete defaultParam.params
+          }
+
+          //必须有data 且为object
+          if (typeof defaultParam['data'] != 'object') {
+            defaultParam.data = {}
+          }
+
+          let sig = getSig(defaultParam,1);
+          defaultParam.data = {
+            sig:sig,
+            data:JSON.stringify(defaultParam.data)
+          }
+
+
+        //get
+        } else {
+          //get必须有params 且为object
+          if (typeof defaultParam['params'] != 'object') {
+            defaultParam['params'] = {}
+          }
+          let sig = getSig(defaultParam,0);
+          defaultParam.params = {
+            sig:sig,
+            data:JSON.stringify(defaultParam.params)
+          }
+        }
+
+      }
 
     	return axios(defaultParam).catch(function(error){
     	  //调试模式

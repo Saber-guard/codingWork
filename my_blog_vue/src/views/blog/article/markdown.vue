@@ -5,6 +5,7 @@
 					:subfield="false"
 					:value="content"
           @change="change"
+          			@imgAdd="imgAdd"
 					@save="save"></mavon-editor>
 </div>
 </template>
@@ -14,6 +15,7 @@
 @ 引用处:
 @   component:blog-article-edit
  */
+import md5 from 'js-md5'
 import common from '@/components/common'
 import { mavonEditor } from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
@@ -67,7 +69,10 @@ export default {
     },
 	methods:{
 		change:change,
-    save:save,
+    	save:save,
+		imgAdd:imgAdd,
+	    getPath:getPath,
+    	getFilename:getFilename,
 	},
     components:{
         'mavon-editor': mavonEditor
@@ -84,7 +89,72 @@ function save(value,render)
 {
   this.$emit('ctrl-save',{value:value,render:render})
 }
+//添加图片时
+function imgAdd(pos_name,file)
+{
+  //获取OSS签名
+  this.$axios({
+    method:"get",
+    url:'system/upload_sig',
 
+  }).then(function (response) {
+    let data = response.data
+    if (data.errno == 0) {
+      let oss_data = new FormData() //上传数据
+      let oss_url = data.data.host //上传地址
+      oss_data.append('OSSAccessKeyId',data.data.OSSAccessKeyId)
+      oss_data.append('policy',data.data.policy)
+      oss_data.append('signature',data.data.signature)
+      oss_data.append('expire',data.data.expire)
+      oss_data.append('key',this.getPath() + this.getFilename(file.name))
+      oss_data.append('file',file)
+
+      //上传
+      this.$axios({
+      	  method:"put",
+    	  url:oss_url,
+    	  data:oss_data,
+    	  headers:{'Content-Type':'multipart/form-data'},
+      }).then(function(res){
+
+      	console.log(res)
+      })
+
+
+
+    } else {
+      this.$message({
+        message: '上传失败',
+        type: 'success'
+      });
+    }
+  }.bind(this))
+
+}
+
+//生成上传文件路径
+function getPath(){
+
+  let path = 'pic'
+
+  let dateObj = new Date();
+  let mon = dateObj.getMonth() + 1
+  let day = dateObj.getDate()
+  let date = dateObj.getFullYear() + "/" + (mon<10?"0"+mon:mon) + "/" +(day<10?"0"+day:day)
+
+  path += '/' + date + '/'
+  return path
+}
+
+//生成文件名
+function getFilename(old_name){
+
+  let ext = old_name.split('.')[1]
+  ext = ext ? ext : ''
+  let timestamp = new Date().getTime()
+  let rand = Math.random()
+  return md5((timestamp + rand).toString()) + '.' + ext
+}
 
 </script>
 <style lang="scss" scoped>
