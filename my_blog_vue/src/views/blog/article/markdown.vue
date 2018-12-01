@@ -1,6 +1,6 @@
 <template>
 <div class="blog-article-markdowm">
-	<mavon-editor style="height: 100%"
+	<mavon-editor style="height: 100%" ref=md
 					:toolbars="toolbars"
 					:subfield="false"
 					:value="content"
@@ -31,49 +31,49 @@ export default {
     data:function(){
         return {
         	toolbars:{
-				bold: true, // 粗体
-				italic: true, // 斜体
-				header: true, // 标题
-				underline: true, // 下划线
-				strikethrough: false, // 中划线
-				mark: true, // 标记
-				superscript: true, // 上角标
-				subscript: true, // 下角标
-				quote: true, // 引用
-				ol: true, // 有序列表
-				ul: true, // 无序列表
-				link: true, // 链接
-				imagelink: true, // 图片链接
-				code: true, // code
-				table: true, // 表格
-				fullscreen: true, // 全屏编辑
-				readmodel: true, // 沉浸式阅读
-				htmlcode: false, // 展示html源码
-				help: false, // 帮助
-				/* 1.3.5 */
-				undo: false, // 上一步
-				redo: false, // 下一步
-				trash: false, // 清空
-				save: true, // 保存（触发events中的save事件）
-				/* 1.4.2 */
-				navigation: true, // 导航目录
-				/* 2.1.8 */
-				alignleft: true, // 左对齐
-				aligncenter: false, // 居中
-				alignright: false, // 右对齐
-				/* 2.2.1 */
-				subfield: false, // 单双栏模式
-				preview: false, // 预览
-  			}
+						bold: true, // 粗体
+						italic: true, // 斜体
+						header: true, // 标题
+						underline: true, // 下划线
+						strikethrough: false, // 中划线
+						mark: true, // 标记
+						superscript: true, // 上角标
+						subscript: true, // 下角标
+						quote: true, // 引用
+						ol: true, // 有序列表
+						ul: true, // 无序列表
+						link: true, // 链接
+						imagelink: true, // 图片链接
+						code: true, // code
+						table: true, // 表格
+						fullscreen: true, // 全屏编辑
+						readmodel: true, // 沉浸式阅读
+						htmlcode: false, // 展示html源码
+						help: false, // 帮助
+						/* 1.3.5 */
+						undo: false, // 上一步
+						redo: false, // 下一步
+						trash: false, // 清空
+						save: true, // 保存（触发events中的save事件）
+						/* 1.4.2 */
+						navigation: true, // 导航目录
+						/* 2.1.8 */
+						alignleft: true, // 左对齐
+						aligncenter: false, // 居中
+						alignright: false, // 右对齐
+						/* 2.2.1 */
+						subfield: false, // 单双栏模式
+						preview: false, // 预览
+					}
         }
     },
-	methods:{
-		change:change,
-    	save:save,
-		imgAdd:imgAdd,
-	    getPath:getPath,
-    	getFilename:getFilename,
-	},
+		methods:{
+				change:change,
+				save:save,
+				imgAdd:imgAdd,
+				getPath:getPath,
+				getFilename:getFilename,
+		},
     components:{
         'mavon-editor': mavonEditor
     }
@@ -92,6 +92,7 @@ function save(value,render)
 //添加图片时
 function imgAdd(pos_name,file)
 {
+	let callback = this.$refs.md.$img2Url;
   //获取OSS签名
   this.$axios({
     method:"get",
@@ -101,35 +102,34 @@ function imgAdd(pos_name,file)
     let data = response.data
     if (data.errno == 0) {
       let oss_data = new FormData() //上传数据
-      let oss_url = data.data.host //上传地址
+			let oss_url = data.data.host //上传地址
+			let path = this.getPath() + this.getFilename(file.name)
       oss_data.append('OSSAccessKeyId',data.data.OSSAccessKeyId)
       oss_data.append('policy',data.data.policy)
       oss_data.append('signature',data.data.signature)
       oss_data.append('expire',data.data.expire)
-      oss_data.append('key',this.getPath() + this.getFilename(file.name))
+      oss_data.append('key',path)
       oss_data.append('file',file)
 
       //上传
       this.$axios({
-      	  method:"put",
+				not_api:true,
+				method:"post",
     	  url:oss_url,
     	  data:oss_data,
     	  headers:{'Content-Type':'multipart/form-data'},
       }).then(function(res){
-
-      	console.log(res)
+				//上传成功
+				callback(pos_name,process.env.API_URL+'/system/file?data={"path":"'+path+'"}')
       })
-
-
 
     } else {
       this.$message({
         message: '上传失败',
-        type: 'success'
+        type: 'warning'
       });
     }
   }.bind(this))
-
 }
 
 //生成上传文件路径
