@@ -32,6 +32,9 @@ class Controller extends BaseController
     //不用验证sig的path列表
     public $no_sig_path_list = [
         '/system/file',
+        '/cms/novel_list',
+        '/cms/novel',
+
     ];
 
 

@@ -31,6 +31,11 @@ Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
     //点赞
     Route::put('zan/{id}', 'Article@zanPut');
 
+
+    //小说
+    Route::get('novel_list', 'Novel@novelListGet');
+    Route::post('novel', 'Novel@novelPost');
+    Route::delete('novel', 'Novel@novelDelete');
 });
 
 //system模块
