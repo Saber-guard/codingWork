@@ -36,6 +36,10 @@ Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
     Route::get('novel_list', 'Novel@novelListGet');
     Route::post('novel', 'Novel@novelPost');
     Route::delete('novel', 'Novel@novelDelete');
+
+    Route::get('novel_clicks_now', 'Novel@novelClicksNowGet');
+    Route::get('novel_clicks_history', 'Novel@novelClicksHistoryGet');
+    
 });
 
 //system模块

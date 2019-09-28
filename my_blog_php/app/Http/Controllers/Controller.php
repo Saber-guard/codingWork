@@ -34,6 +34,8 @@ class Controller extends BaseController
         '/system/file',
         '/cms/novel_list',
         '/cms/novel',
+        '/cms/novel_clicks_now',
+        '/cms/novel_clicks_history',
 
     ];
 

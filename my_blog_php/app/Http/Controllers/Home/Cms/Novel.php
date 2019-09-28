@@ -49,6 +49,60 @@ class Novel extends Controller
         return $this->returnInfo($result,$errno,$info);
     }
 
-    //
+    //抓取当前的所有小说点击量并返回
+    public function novelClicksNowGet(Request $request,NovelClick $novel_click,N $novel)
+    {
+        set_time_limit(60);
+        $novel_list = $novel->get();
+        $novel_clicks_now = array();
+        foreach ($novel_list as $n) {
+            //抓取
+            $click_time = self::crawlNovelClick($n);
+            $novel_clicks_now[] = array(
+                'name'=>$n->n_name,
+                'identify'=>$n->n_identify,
+                'channel'=>$n->n_channel,
+                'click_time'=>$click_time,
+            );
+
+        }
+
+        return $this->returnInfo($novel_clicks_now,0);
+    }
+
+    //返回所有的小说点击量历史记录
+    public function novelClicksHistoryGet(Request $request,NovelClick $novel_click)
+    {
+
+        $result = $novel_click->orderBy('nc_date','desc')->get();
+        return $this->returnInfo($result->toArray());
+    }
+
+    //=============================================================================
+
+    //抓取指定小说当前点击量
+    static public function crawlNovelClick($novel)
+    {
+        $click_time = 0;
+        //分渠道
+        //1.懒人听书
+        if ($novel->n_channel == 1) {
+            $url = 'https://www.lrts.me/book/'.$novel->n_identify;
+            $try = 0;
+            while ($try<3) {
+                $crawl_info = file_get_contents($url);
+                $reg = '/<span><em>\s+(\S+)\s+<\/em>播放<\/span>/';
+                $reg_res = preg_match($reg,$crawl_info,$match);
+                if (isset($match[1]) && !empty($match[1])) {
+                    $click_time = $match[1];
+                    break;
+                }
+            }
     
+        } elseif ($novel->n_channel == 2) {
+
+        }
+
+        return $click_time;
+    }
 }
