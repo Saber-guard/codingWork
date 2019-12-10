@@ -26,10 +26,13 @@ export default {
 	props:['content'],
 	mounted:function(){
 		//让编辑器里的字小一点
-		$('textarea.auto-textarea-input').css('font-size','13px')
+		$('textarea.auto-textarea-input').css('font-size','13px').css('padding','3px')
+		$('div.single-edit').css('background-color','#dfe2e5')
+		$('div.content-input-wrapper').css('padding','0px').css('padding-left','25px')
 	},
     data:function(){
         return {
+					scrollStyle:true,
         	toolbars:{
 						bold: true, // 粗体
 						italic: true, // 斜体
@@ -82,6 +85,7 @@ export default {
 //内容被修改时
 function change(value,render)
 {
+	// console.log($('.blog-list > .left'))
 	this.$emit('text-change',{value:value,render:render})
 }
 //按下保存键时
@@ -158,6 +162,6 @@ function getFilename(old_name){
 
 </script>
 <style lang="scss" scoped>
-.blog-article-markdowm{height:700px;}
+.blog-article-markdowm{}//height:700px;
 </style>
 
