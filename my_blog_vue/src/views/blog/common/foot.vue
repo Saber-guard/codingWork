@@ -9,10 +9,10 @@
         </ul>
     </div>
     <div class="Copyright">
-    <ul>
-        <!-- <a href="#">帮助中心</a><a href="#">空间客服</a><a href="#">投诉中心</a><a href="#">空间协议</a> -->
-    </ul>
-    <p><br /></p>
+        <ul>
+            <a href="http://www.beian.miit.gov.cn">晋ICP备16010493号</a>
+        </ul>
+        <p><br /></p>
     </div>
  </footer>
 </template>
@@ -85,7 +85,7 @@ export default {
     margin: 40px 0 0;
     ul{
       a { color: #f16e50; display: inline; padding: 0 10px; }
-      a:nth-child(-n+3) { border-right: #999 1px solid }
+      // a:nth-child(-n+3) { border-right: #999 1px solid }
       a:hover { color: #ff8b70; }
     }
   }
