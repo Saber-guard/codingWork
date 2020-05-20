@@ -15,7 +15,8 @@
     "mqtt": "^3.0.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.22.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

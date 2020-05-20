@@ -1,10 +1,10 @@
-import aaa from '@/views/aaa'
-import bbb from '@/views/bbb'
-import ccc from '@/views/ccc'
-import blog from '@/views/blog/blog'
-import blog_category from '@/views/blog/category/category'
-import blog_list from '@/views/blog/list/list'
-import blog_article from '@/views/blog/article/article'
+const aaa = () => import('@/views/aaa')
+const bbb = () => import('@/views/bbb')
+const ccc = () => import('@/views/ccc')
+const blog = () => import('@/views/blog/blog')
+const blog_category = () => import('@/views/blog/category/category')
+const blog_list = () => import('@/views/blog/list/list')
+const blog_article = () => import('@/views/blog/article/article')
 
 export default [
     {
