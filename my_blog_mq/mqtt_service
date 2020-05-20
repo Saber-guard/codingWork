@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ "$1" = "stop" ]||[ "$1" = "restart" ];then
+    num=$(ps aux | grep node\ ./main.js | grep -v grep | wc -l)
+    if [ $num = 1 ];then
+	pid=$(ps aux | grep node\ ./main.js | grep -v grep | awk -F "[ ]+" '{print $2}')
+	eval "kill -9 $pid"
+    	echo "服务关闭成功！"
+
+    elif [ $num = 0 ];then
+	echo "关闭错误：服务未开启"
+    else
+	echo "关闭错误：存在多个服务"
+    fi
+fi
+
+if [ "$1" = "start" ]||[ "$1" = "restart" ];then
+    num=$(ps aux | grep node\ ./main.js | grep -v grep | wc -l)
+    if [ $num = 0 ];then
+        eval "node ./main.js 1>/dev/null &"
+        num=$(ps aux | grep node\ ./main.js | grep -v grep | wc -l)
+        if [ $num = 1 ];then
+            echo "服务开启成功"
+        else
+            echo "服务开启失败"
+        fi
+
+    else
+	echo "服务已存在"
+    fi
+
+fi
+

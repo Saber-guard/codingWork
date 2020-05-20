@@ -1,0 +1,19 @@
+{
+  "name": "my_blog_mq",
+  "version": "1.0.0",
+  "description": "codingwork项目的mqtt服务",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "zzh",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "circular-json": "^0.5.9",
+    "md5": "^2.2.1",
+    "mosca": "^2.8.3",
+    "mqtt": "^4.1.0",
+    "redis": "^3.0.2"
+  }
+}
