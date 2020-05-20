@@ -11,6 +11,3 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-
-prod.env.js
-dev.env.js
