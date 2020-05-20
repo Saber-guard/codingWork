@@ -1,6 +1,6 @@
 var mqtt = require('mqtt');
 
-var host = 'mqtt://mq.codingwork.cn:8002';
+var host = 'mqtt://local.mq.codingwork.cn';
 var client  = mqtt.connect(host,{
     keepalive:0,
     clientId:"784a679e50058b9eeb4ba462892ec6550d0b260d:1539784124",

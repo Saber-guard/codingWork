@@ -27,7 +27,7 @@ var persistenceSettings = {
 }
 //http
 var httpSettings = {
-    port:1883,//web端连接端口
+    port:80,//web端连接端口
     bundle:true,
     static:'./',
 }
