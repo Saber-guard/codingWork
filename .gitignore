@@ -101,7 +101,9 @@ ENV/
 # mypy
 .mypy_cache/
 
-#将配置文件去除版本控制
+#锟斤拷锟斤拷锟斤拷锟侥硷拷去锟斤拷锟芥本锟斤拷锟斤拷
 /my_blog/my_blog/settings.py
 /my_blog/my_blog/settings.py
 /my_blog_vue/dist
+
+.DS_Store
