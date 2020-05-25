@@ -42,6 +42,6 @@ let time_id = setInterval(function(){
 		})
 	}
 
-},1000);
+},100);
 
 

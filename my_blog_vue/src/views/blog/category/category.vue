@@ -47,8 +47,8 @@ export default {
 	name: 'category',
   created:function()
   {
-    //打开动画
-    this.$parent.openAnimation(true)
+    //关闭动画
+    this.$parent.openAnimation(false)
     //获取栏目列表
     this.$axios({
       method:"get",
