@@ -24,7 +24,7 @@ class Article extends Controller
 			$result->where('a_title','like','%'.$this->param['title'].'%'):$result;
 
 		//排序
-		$result = $result->orderBy('a_id','desc');
+		$result = $result->orderBy('a_title','asc')->orderBy('a_id','desc');
 
 		//指定字段
 		if (isset($this->param['select'])) {
