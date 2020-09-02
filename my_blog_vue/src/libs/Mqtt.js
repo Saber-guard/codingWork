@@ -1,6 +1,7 @@
 import mqtt from 'mqtt'
 import md5 from 'js-md5'
 import Axios from '@/libs/Axios'
+import Store from '@/libs/Store.js'
 
 let ext = 'codingwork';
 let mq_url = process.env.MQ_URL;
@@ -14,14 +15,8 @@ let client;
 let subscribe_callback_list = {};
 
 let Mqtt = {
-	//mqtt连接状态
-	status:false,
 
-	//vue的use回调
-	install:function(Vue){
-
-		Vue.prototype.$Mqtt = Mqtt;
-
+	connect:function(){
 		//获取clientid
 		Axios.curl({
 		    method:"post",
@@ -58,7 +53,6 @@ let Mqtt = {
 	},
 	//订阅
 	subscribe:function(topic,options,message_callback){
-		//
 		subscribe_callback_list[topic] = message_callback;
 		client.subscribe(topic,options,subscribeCallback);
 	},
@@ -79,7 +73,7 @@ function connectCallback(){
 		console.log('connect');
 	}
 	//连接状态
-	Mqtt.status = true;
+	Store.commit('connectMqtt');
 	Mqtt.subscribe('/personal/'+connect_option.clientId,{},function(topic, message,packet){
 		console.log('收到'+topic+'频道的消息');
 	});
@@ -95,11 +89,11 @@ function closeCallback(){
 	if (process.env.DE_BUG) {
 		console.log('close');
 	}
-	Mqtt.status = false;
+	Store.commit('unconnectMqtt');
 }
 //连接失败或发生错误事件回调
 function errorCallback(error){
-	Mqtt.status = false;
+	Store.commit('unconnectMqtt');
 	console.log('error');
 }
 //收到消息事件回调

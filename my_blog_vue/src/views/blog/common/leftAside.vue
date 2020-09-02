@@ -32,22 +32,30 @@ export default {
 	name: 'leftAside',
   created: function(){
     //获取当前在线人数
-    this.getClientCount()
-    //订阅/public/online频道
-    this.$Mqtt.subscribe('/public/online',{},this.public_online_callback);
+    this.getClientCount();
+    this.subscribeOnline(this.mqtt_status);
   },
   data:function(){
       return {
         visitor_num:0
       }
   },
+  computed:{
+    mqtt_status:function(){
+      return this.$store.getters.getMqttStatus;
+    }
+  },
+  watch:{
+    mqtt_status:subscribeOnline,
+  },
 	methods:{
-      public_online_callback:public_online_callback,
+      publicOnlineCallback:publicOnlineCallback,
       getClientCount:getClientCount,
+      subscribeOnline:subscribeOnline,
 	},
 }
 
-function public_online_callback(topic,msg,packet){
+function publicOnlineCallback(topic,msg,packet){
         msg = parseInt(msg.toString());
         this.visitor_num = typeof msg == 'number' ? msg : 0;
 }
@@ -66,6 +74,12 @@ function getClientCount()
 
 }
 
+//mqtt连接成功后订阅/public/online频道
+function subscribeOnline(status){
+  if (status) {
+    this.$Mqtt.subscribe('/public/online',{},this.publicOnlineCallback);
+  }
+}
 
 
 </script>

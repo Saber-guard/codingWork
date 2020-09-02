@@ -1,7 +1,7 @@
 <template>
 <div class="blog-category-dir">
 	<div class="pic-box" >
-    <img class="pic" :src="info.c_pic" ondragstart="return false">
+    <imgBox class="pic" :src="api_url+info.c_pic" ondragstart="return false"></imgBox>
   </div>
 	<div class="title">
     <router-link :to="'/blog/list/'+info.c_id" v-text="info.c_title"></router-link>
@@ -9,7 +9,7 @@
 	<div class="list" v-loading="loding">
 		<div class="memo" v-text="info.c_alias"></div>
 		<div class="desc" v-text="info.c_info"></div>
-		<div class="article" v-for="article in info.list">
+		<div class="article" v-for="(article,index) in info.list" :key="index">
 			<!--<a href="#" v-text="article.a_title"></a>-->
       <router-link :to="'/blog/article/'+article.a_id" v-text="article.a_title"></router-link>
 		</div>
@@ -18,6 +18,7 @@
 </template>
 <script>
 import common from '@/components/common'
+import imgBox from '@/components/imgBox'
 
 export default {
 	extends:common,
@@ -43,10 +44,12 @@ export default {
 	data:function(){
 		return {
       loding:true,
+      api_url:process.env.API_URL,
 		}
 	},
 	components:{
-    }
+    imgBox:imgBox,
+  }
 }
 
 </script>

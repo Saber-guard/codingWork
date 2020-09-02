@@ -6,7 +6,7 @@ import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
 import Func from '@/libs/Func'
-
+import Mqtt from '@/libs/Mqtt'
 
 //导入组件
 import App from '@/components/App'
@@ -24,24 +24,17 @@ Vue.prototype.$axios = Axios.curl
 Vue.prototype.$cookie = Cookie
 Vue.prototype.$func = Func
 Vue.prototype.$Vue = Vue
+Vue.prototype.$Mqtt = Mqtt;
 
-//连上mqtt再创建实例
-let time_id = setInterval(function(){
-	if (Vue.prototype.$Mqtt.status == true) {
-		clearInterval(time_id);
-
-		// 创建Vue实例
-		new Vue({
-			el: '#app',
-			router:Router,
-			store:Store,
-			template: '<App/>',
-			components: {
-				App:App,
-			}
-		})
+// 创建Vue实例
+new Vue({
+	el: '#app',
+	router:Router,
+	store:Store,
+	template: '<App/>',
+	components: {
+		App:App,
 	}
-
-},100);
-
-
+})
+//连接mqtt
+Vue.prototype.$Mqtt.connect();

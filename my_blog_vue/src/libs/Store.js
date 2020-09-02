@@ -24,8 +24,9 @@ let stores = {
 
     //用户信息
     _common_data:{
-	    user_info:{},
+      user_info:{},
     },
+    _mqtt_status:false,
 	},
   mutations:{
 	  //登录
@@ -38,7 +39,15 @@ let stores = {
     //退出
     logout:function(state){
       state._common_data.user_info = {}
-    }
+    },
+    //连接mqtt
+    connectMqtt:function(state){
+      state._mqtt_status = true;
+    },
+    //断开mqtt
+    unconnectMqtt:function(state){
+      state._mqtt_status = false;
+    },
   },
   getters:{
 	  //获得公共配置
@@ -49,6 +58,10 @@ let stores = {
     getCommonData:function(state){
       return state._common_data
     },
+    //获取mqtt连接状态
+    getMqttStatus:function(state){
+      return state._mqtt_status;
+    }
   },
   actions:{
 
