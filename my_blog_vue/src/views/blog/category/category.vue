@@ -56,6 +56,7 @@ export default {
       params:{
         "parent":1,
         "select":"title,id,info,alias,pic",
+        "size":100
       }
     }).then(function (response) {
       //分割为3个一组
