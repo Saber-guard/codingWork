@@ -39,7 +39,7 @@ Route::group(['namespace' => 'Cms','prefix' => 'cms'], function(){
 
     Route::get('novel_clicks_now', 'Novel@novelClicksNowGet');
     Route::get('novel_clicks_history', 'Novel@novelClicksHistoryGet');
-    
+
 });
 
 //system模块
@@ -63,8 +63,10 @@ Route::group(['namespace' => 'System','prefix' => 'system'], function(){
     //获取客户端连接数
     Route::get('mqtt_client_count', 'Mqtt@clientCountGet');
 
-
-
-
 });
 
+//voice模块
+Route::group(['namespace' => 'Voice','prefix' => 'voice'], function(){
+    // strToVoice
+    Route::get('strToVoice', 'VoiceController@strToVoice');
+});

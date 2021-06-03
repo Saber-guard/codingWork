@@ -103,7 +103,6 @@ ENV/
 
 #�������ļ�ȥ���汾����
 /my_blog/my_blog/settings.py
-/my_blog/my_blog/settings.py
 /my_blog_vue/dist
 /my_blog_vue/config/dev.env.js
 /my_blog_vue/config/prod.env.js
