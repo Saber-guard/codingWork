@@ -68,5 +68,5 @@ Route::group(['namespace' => 'System','prefix' => 'system'], function(){
 //voice模块
 Route::group(['namespace' => 'Voice','prefix' => 'voice'], function(){
     // strToVoice
-    Route::get('strToVoice', 'VoiceController@strToVoice');
+    Route::any('strToVoice', 'VoiceController@strToVoice');
 });

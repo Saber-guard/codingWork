@@ -18,6 +18,8 @@ class VoiceController extends Controller
      */
     public function strToVoice(Request $request)
     {
+        ini_set('max_execution_time', '0'); //防止 php 脚本超时
+
         $param = $this->param;
         $client = new TtsClient(
             env('XUNFEI_APPID'), env('XUNFEI_KEY'), env('XUNFEI_SECRET'),
@@ -31,22 +33,26 @@ class VoiceController extends Controller
             mkdir($fileDir, 0777, true);
         }
 
-        // 字符串截取为数组
-        $text = preg_replace('/\s+/', ' ', $param['text']);
-        $offset = 0;
-        $limit = 3200;
-        $arr = [];
-        while ($offset <= mb_strlen($text)) {
-            $arr[] = mb_substr($text, $offset, $limit);
-            $offset += $limit;
-        }
+        // 文件存在则不用重复转
+        if (!is_file($filePath)) {
+            // 字符串截取为数组
+            $text = preg_replace('/\s+/', ' ', $param['text']);
+            $offset = 0;
+            $limit = 3200;
+            $arr = [];
+            while ($offset <= mb_strlen($text)) {
+                $arr[] = mb_substr($text, $offset, $limit);
+                $offset += $limit;
+            }
 
-        // 转语音并写入文件
-        file_put_contents($filePath, '');
-        foreach ($arr as $item) {
-            $content = $client->request($item)->getBody();
-            file_put_contents($filePath, $content, FILE_APPEND);
+            // 转语音并写入文件
+            file_put_contents($filePath, '');
+            foreach ($arr as $item) {
+                $content = $client->request($item)->getBody();
+                file_put_contents($filePath, $content, FILE_APPEND);
+            }
         }
         return $this->returnInfo(['file_name' => $fileName],0,'文字转语音成功');
     }
 }
+
