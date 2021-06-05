@@ -23,7 +23,7 @@ class VoiceController extends Controller
         $param = $this->param;
         $client = new TtsClient(
             env('XUNFEI_APPID'), env('XUNFEI_KEY'), env('XUNFEI_SECRET'),
-            ['speed' => 75]
+            ['speed' => 75, 'vcn' => 'aisjinger']
         );
         $fileName = $param['file_name'] ?? md5($param['text']) . '.mp3';
         $fileDir = public_path() . '/' . self::VOICE_DIR;
