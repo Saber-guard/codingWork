@@ -25,7 +25,7 @@ class VoiceController extends Controller
             env('XUNFEI_APPID'), env('XUNFEI_KEY'), env('XUNFEI_SECRET'),
             ['speed' => 75]
         );
-        $fileName = md5($param['text']) . '.mp3';
+        $fileName = $param['file_name'] ?? md5($param['text']) . '.mp3';
         $fileDir = public_path() . '/' . self::VOICE_DIR;
         $filePath = $fileDir . '/' . $fileName;
         // 目录不存在则创建

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94445bf7-108d-4ed2-a30f-6bbd9d86374f" name="默认的" comment="默认的">
+    <list default="true" id="94445bf7-108d-4ed2-a30f-6bbd9d86374f" name="默认的" comment="文件存在则不用重复转语音">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my_blog_php/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/Voice/VoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/Voice/VoiceController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my_blog_php/routes/home.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/routes/home.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_php/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/composer.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,23 +359,35 @@
       <updated>1514697621936</updated>
       <workItem from="1622635569095" duration="10474000" />
       <workItem from="1622730310961" duration="597000" />
-      <workItem from="1622795901465" duration="1780000" />
+      <workItem from="1622795901465" duration="3027000" />
     </task>
+    <task id="LOCAL-00001" summary="文件存在则不用重复转语音">
+      <created>1622802003657</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1622802003657</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="文件存在则不用重复转语音" />
+    <option name="LAST_COMMIT_MESSAGE" value="文件存在则不用重复转语音" />
   </component>
   <component name="WindowStateProjectService">
     <state x="634" y="322" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1622636443216">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
     <state x="634" y="322" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1622636443216" />
-    <state x="132" y="73" width="1541" height="962" key="CommitChangelistDialog2" timestamp="1622801956209">
+    <state x="473" y="135" width="1541" height="962" key="CommitChangelistDialog2" timestamp="1622861750443">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="132" y="73" width="1541" height="962" key="CommitChangelistDialog2/-2560.-320.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1622801956209" />
-    <state x="473" y="135" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1622641354620" />
+    <state x="132" y="73" width="1541" height="962" key="CommitChangelistDialog2/-2560.-320.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1622802003521" />
+    <state x="473" y="135" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1622861750443" />
     <state x="715" y="44" width="609" height="538" key="find.popup" timestamp="1622637593289">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
