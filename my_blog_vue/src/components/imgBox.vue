@@ -29,7 +29,7 @@ export default {
   },
   computed:{
     final_src:function(){
-      return this.$store.getters.getMqttStatus ? this.src : this.default_src;
+      return this.src;
     },
   },
 }
