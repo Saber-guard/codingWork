@@ -108,4 +108,4 @@ ENV/
 /my_blog_vue/config/prod.env.js
 
 .DS_Store
-/.idea/
+/.idea/*
