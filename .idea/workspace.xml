@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="94445bf7-108d-4ed2-a30f-6bbd9d86374f" name="默认的" comment="feat:支持指定音频文件名">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
