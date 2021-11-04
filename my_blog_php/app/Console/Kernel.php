@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Inspire::class,
         Commands\DailyCrawlClicks::class,
+        Commands\CalcProfitCommand::class,
     ];
 
     /**
@@ -27,7 +28,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
                  ->hourly();
-        
+
         $schedule->command('crawl_clicks:daily')
                  ->dailyAt('17:00');
     }

@@ -32,19 +32,19 @@ class Mqtt extends Controller
         //根据访客信息生成对应的client_pre
         $client_pre = $this->getClientPre();
 
-        $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
-        if (empty($record)) {
-            $data['cr_ip'] = $client_ip;
-            $data['cr_client_pre'] = $client_pre;
-            $data['cr_user_agent'] = $client_agent;
-            $data['cr_datetime'] = date('Y-m-d H:i:s',$time);
-            //新增数据
-            $id = $clientRecord->insertGetId($data);
-            if (empty($id)) {
-                //
-                return $this->returnInfo(array(),2,'初始化失败');
-            }
-        }
+//        $record = $clientRecord->where('cr_client_pre','=',$client_pre)->first();
+//        if (empty($record)) {
+//            $data['cr_ip'] = $client_ip;
+//            $data['cr_client_pre'] = $client_pre;
+//            $data['cr_user_agent'] = $client_agent;
+//            $data['cr_datetime'] = date('Y-m-d H:i:s',$time);
+//            //新增数据
+//            $id = $clientRecord->insertGetId($data);
+//            if (empty($id)) {
+//                //
+//                return $this->returnInfo(array(),2,'初始化失败');
+//            }
+//        }
 
         $response = array(
             'ip'=>$client_ip,

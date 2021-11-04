@@ -17,31 +17,31 @@ let subscribe_callback_list = {};
 let Mqtt = {
 
 	connect:function(){
-		//获取clientid
+		//获取clientid,写到session里
 		Axios.curl({
 		    method:"post",
 		    url:'system/mqtt_clientid',
 		    data:{}
 		}).then(function(response){
 
-			let data = response.data;
-			if (data.errno == 0) {
-				//连接参数
-			    connect_option.clientId=data.data.clientid,
-			   	connect_option.username=data.data.user,
-				connect_option.password=md5(data.data.user+ext),
-
-				//连接
-				client = mqtt.connect(mq_url,connect_option);
-				client.on('connect',connectCallback);
-				client.on('reconnect',reconnectCallback);
-				client.on('close',closeCallback);
-				client.on('error',errorCallback);
-				client.on('message',messageCallback);
-
-			} else {
-				console.log('连接授权获取失败！');
-			}
+			// let data = response.data;
+			// if (data.errno == 0) {
+			// 	//连接参数
+			//     connect_option.clientId=data.data.clientid,
+			//    	connect_option.username=data.data.user,
+			// 	connect_option.password=md5(data.data.user+ext),
+      //
+			// 	//连接
+			// 	client = mqtt.connect(mq_url,connect_option);
+			// 	client.on('connect',connectCallback);
+			// 	client.on('reconnect',reconnectCallback);
+			// 	client.on('close',closeCallback);
+			// 	client.on('error',errorCallback);
+			// 	client.on('message',messageCallback);
+      //
+			// } else {
+			// 	console.log('连接授权获取失败！');
+			// }
 
 		}.bind(this));
 

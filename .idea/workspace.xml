@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="94445bf7-108d-4ed2-a30f-6bbd9d86374f" name="默认的" comment="feat:支持指定音频文件名">
+    <list default="true" id="94445bf7-108d-4ed2-a30f-6bbd9d86374f" name="默认的" comment="fix:更换发音人">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/Voice/VoiceController.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/Voice/VoiceController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_php/app/Console/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/app/Console/Kernel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/System/File.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/System/File.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/System/Mqtt.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/app/Http/Controllers/Home/System/Mqtt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_php/config/database.php" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_php/config/database.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_blog_vue/src/libs/Mqtt.js" beforeDir="false" afterPath="$PROJECT_DIR$/my_blog_vue/src/libs/Mqtt.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +364,15 @@
       <workItem from="1622730310961" duration="597000" />
       <workItem from="1622795901465" duration="4402000" />
       <workItem from="1622900879312" duration="13000" />
-      <workItem from="1622901076170" duration="619000" />
+      <workItem from="1622901076170" duration="832000" />
+      <workItem from="1622942710150" duration="5000" />
+      <workItem from="1622953350228" duration="24000" />
+      <workItem from="1622983159462" duration="74000" />
+      <workItem from="1623073146369" duration="464000" />
+      <workItem from="1623119580875" duration="3870000" />
+      <workItem from="1634112317310" duration="4075000" />
+      <workItem from="1634976428218" duration="13576000" />
+      <workItem from="1636016933466" duration="1496000" />
     </task>
     <task id="LOCAL-00001" summary="文件存在则不用重复转语音">
       <created>1622802003657</created>
@@ -376,7 +388,21 @@
       <option name="project" value="LOCAL" />
       <updated>1622861837167</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="fix:更换发音人">
+      <created>1622902013587</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1622902013587</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix:更换voice存储地点">
+      <created>1623146166026</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1623146166026</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,30 +411,28 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="文件存在则不用重复转语音" />
     <MESSAGE value="feat:支持指定音频文件名" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:支持指定音频文件名" />
+    <MESSAGE value="fix:更换发音人" />
+    <MESSAGE value="fix:更换voice存储地点" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix:更换voice存储地点" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="634" y="322" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1622636443216">
+    <state x="728" y="369" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1634980251478">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="634" y="322" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1792.1120@0.0.1792.1120" timestamp="1622636443216" />
-    <state x="473" y="135" width="1541" height="962" key="CommitChangelistDialog2" timestamp="1622861837039">
+    <state x="728" y="369" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1792.1120@0.0.1792.1120" timestamp="1634980251478" />
+    <state x="473" y="135" key="CommitChangelistDialog2" timestamp="1634977807865">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="132" y="73" width="1541" height="962" key="CommitChangelistDialog2/-2560.-320.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1622802003521" />
-    <state x="473" y="135" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1622861837039" />
-    <state x="715" y="44" width="609" height="538" key="find.popup" timestamp="1622637593289">
+    <state x="473" y="135" key="CommitChangelistDialog2/-2560.0.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1634121829626" />
+    <state x="473" y="135" key="CommitChangelistDialog2/0.0.1792.1120@0.0.1792.1120" timestamp="1634977807865" />
+    <state x="591" y="317" width="609" height="486" key="find.popup" timestamp="1636018107664">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="715" y="44" width="609" height="538" key="find.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1622637593289" />
-    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup" timestamp="1622901202012">
+    <state x="591" y="317" width="609" height="486" key="find.popup/-2560.0.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1636018107664" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup" timestamp="1636016985459">
       <screen x="0" y="0" width="1792" height="1120" />
     </state>
-    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/-2560.-320.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1622789699223" />
-    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1622901202012" />
-    <state x="626" y="479" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1622702715562">
-      <screen x="0" y="0" width="1792" height="1120" />
-    </state>
-    <state x="626" y="479" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/-2560.-320.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1622702715562" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/-2560.0.2560.1440/0.0.1792.1120@0.0.1792.1120" timestamp="1636016985459" />
+    <state x="561" y="251" width="670" height="676" key="search.everywhere.popup/0.0.1792.1120@0.0.1792.1120" timestamp="1634976957420" />
   </component>
 </project>
