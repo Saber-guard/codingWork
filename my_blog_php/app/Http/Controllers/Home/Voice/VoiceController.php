@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class VoiceController extends Controller
 {
-    const VOICE_DIR = 'voices';
+    const VOICE_DIR = '/mnt/voices';
 
     /**
      * 文字转语音
@@ -26,7 +26,7 @@ class VoiceController extends Controller
             ['speed' => 75, 'vcn' => 'aisjinger']
         );
         $fileName = $param['file_name'] ?? md5($param['text']) . '.mp3';
-        $fileDir = public_path() . '/' . self::VOICE_DIR;
+        $fileDir = self::VOICE_DIR;
         $filePath = $fileDir . '/' . $fileName;
         // 目录不存在则创建
         if (!is_dir($fileDir)) {
