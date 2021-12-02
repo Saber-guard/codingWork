@@ -2,9 +2,11 @@ const aaa = () => import('@/views/aaa')
 const bbb = () => import('@/views/bbb')
 const ccc = () => import('@/views/ccc')
 const blog = () => import('@/views/blog/blog')
-const blog_category = () => import('@/views/blog/category/category')
-const blog_list = () => import('@/views/blog/list/list')
-const blog_article = () => import('@/views/blog/article/article')
+const blogCategory = () => import('@/views/blog/category/category')
+const blogList = () => import('@/views/blog/list/list')
+const blogArticle = () => import('@/views/blog/article/article')
+const investment = () => import('@/views/investment/investment')
+const investmentCompanyList = () => import('@/views/investment/company/companyList')
 
 export default [
     {
@@ -35,18 +37,31 @@ export default [
             {
                 path: 'category',
                 name: 'category',
-                component: blog_category,
+                component: blogCategory,
             },
             {
                 path: 'list/:id',
                 name: 'list',
-                component: blog_list,
+                component: blogList,
             },
             {
                 path: 'article/:id',
                 name: 'article',
-                component: blog_article,
+                component: blogArticle,
             },
         ],
+    },
+    {
+      path:'/investment',
+      name:'investment',
+      component:investment,
+      redirect: '/investment/companyList',
+      children:[
+          {
+              path: 'companyList',
+              name: 'companyList',
+              component: investmentCompanyList,
+          },
+      ],
     },
 ]

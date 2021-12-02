@@ -5,7 +5,6 @@ import Store from '@/libs/Store.js'
 import Axios from '@/libs/Axios'
 import Cookie from '@/libs/Cookie'
 import Func from '@/libs/Func'
-import $ from 'jquery'
 
 
 //导入组件

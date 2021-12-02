@@ -3,8 +3,8 @@
     <div class="footavatar">
         <img src="/static/images/1231.jpg" class="footphoto">
         <ul class="footinfo">
-            <p class="fname"><a href="/dancesmile" >果冻悠哉</a>  </p>
-            <p class="finfo">现居：北京朝阳</p>
+            <p class="fname"><a href="/dancesmile" >趋势跟踪</a>  </p>
+            <p class="finfo">现居：西安雁塔</p>
             <p></p>
         </ul>
     </div>
