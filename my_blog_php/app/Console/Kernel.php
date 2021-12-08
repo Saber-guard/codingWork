@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\DailyCrawlClicks::class,
         Commands\CalcProfitCommand::class,
+        Commands\TestCallCommand::class,
     ];
 
     /**
