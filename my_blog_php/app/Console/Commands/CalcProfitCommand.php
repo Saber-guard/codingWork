@@ -13,7 +13,7 @@ class CalcProfitCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'shares:calcProfit {--code=} {--start=} {--end=} {--maSmall} {--maBig}';
+    protected $signature = 'shares:calcProfit {--code=} {--start=} {--end=} {--maSmall} {--maBig} {--addLine}';
 
     /**
      * The console command description.
@@ -55,8 +55,9 @@ class CalcProfitCommand extends Command
         $end = $this->option("end");
         $maSmall = $this->option("maSmall");
         $maBig = $this->option("maBig");
+        $addLine = $this->option("addLine");
         // 葛南维八大买卖法-每次买1手
-        $this->method1($code, $start, $end, $maSmall, $maBig);
+        return $this->method1($code, $start, $end, $maSmall, $maBig, $addLine);
     }
 
     /**
@@ -68,7 +69,7 @@ class CalcProfitCommand extends Command
      * @param $smallSize
      * @param $bigSize
      */
-    public function method1($code, $start, $end, $smallSize, $bigSize)
+    public function method1($code, $start, $end, $smallSize, $bigSize, $addLine)
     {
         $preList = DayData::select('today_end')
             ->where('code', $code)
@@ -98,24 +99,11 @@ class CalcProfitCommand extends Command
             $maSmall = round(array_sum(array_slice($preList, 0, $smallSize))/$smallSize, 5);
 
             if ($maSmall > $maBig) {
-                // 短期均线前低置空
-                $this->maSmallPreLow = 0;
-                // 短期均线首次下跌则刷新前高值，上涨突破前高则将前高置空
-                if ($maSmall < $preMaSmall) {
-                    if (empty($this->maSmallPreHigh)) {
-                        $this->maSmallPreHigh = $preMaSmall;
-
-                    }
-                } else {
-                    if (!empty($this->maSmallPreHigh) && $maSmall > $this->maSmallPreHigh) {
-                        $this->maSmallPreHigh = 0;
-
-                    }
-                }
-
                 // 是否突破首日
                 if (empty($hasBreak)) {
                     $hasBreak = 1;
+                    $this->maSmallPreLow = 0;// // 短期均线前低置空
+
                     // 长期均线斜率不下降则买入
 //                    if (($maBig - $preMaBig)/$preMaBig > -0.001) {
                         if (empty($this->buyHands)) {
@@ -126,26 +114,50 @@ class CalcProfitCommand extends Command
                         $this->buy($dayData['date'], $dayData['today_end'], $this->buyHands);
 //                    }
                 } else {
-
+                    // 短期均线首次下跌则刷新前高值，上涨突破前高则将前高置空
+                    if ($maSmall < $preMaSmall) {
+                        if (empty($this->maSmallPreHigh)) {
+                            $this->maSmallPreHigh = $preMaSmall;
+                        }
+                    } else {
+                        if (!empty($this->maSmallPreHigh) && $maSmall > $this->maSmallPreHigh) {
+                            $this->maSmallPreHigh = 0;
+                            // 最多加仓一次
+//                            if ($this->nowTimes == 1) {
+//                                // 盈利超过一定幅度才允许加仓
+//                                $nowProfitRatio = ($dayData['today_end'] - $this->operateList[0]['buy_price'])/$this->operateList[0]['buy_price'] * 100;
+//                                if ($nowProfitRatio > $addLine) {
+//                                    $this->buy($dayData['date'], $dayData['today_end'], $this->buyHands);
+//                                }
+//                            }
+                        }
+                    }
                 }
             } else {
-                // 短期均线前高置空
-                $this->maSmallPreHigh = 0;
-                // 短期均线首次上涨则刷新前低值，下跌突破前低则将前低置空
-                if ($maSmall > $preMaSmall) {
-                    if (empty($this->maSmallPreLow)) {
-                        $this->maSmallPreLow = $preMaSmall;
+                // 是否跌破首日
+                if (!empty($hasBreak)) {
+                    $hasBreak = 0;
+                    $this->maSmallPreHigh = 0;// // 短期均线前高置空
 
+                    // 长期均线斜率不下降则且持仓大于一个单位，则卖出一半,否则全卖
+                    if (($maBig - $preMaBig)/$preMaBig > -0.001 && $this->nowTimes > 1) {
+                        $this->sell($dayData['date'], $dayData['today_end'], floor($this->nowTimes/2));
+                    } else {
+                        $this->sell($dayData['date'], $dayData['today_end'], 0);
                     }
                 } else {
-                    if (!empty($this->maSmallPreLow) && $maSmall < $this->maSmallPreLow) {
-                        $this->maSmallPreLow = 0;
-
+                    // 短期均线首次上涨则刷新前低值，下跌突破前低则将前低置空并清仓
+                    if ($maSmall > $preMaSmall) {
+                        if (empty($this->maSmallPreLow)) {
+                            $this->maSmallPreLow = $preMaSmall;
+                        }
+                    } else {
+                        if (!empty($this->maSmallPreLow) && $maSmall < $this->maSmallPreLow) {
+                            $this->maSmallPreLow = 0;
+                            $this->sell($dayData['date'], $dayData['today_end'], 0);
+                        }
                     }
                 }
-
-                $hasBreak = 0;
-                $this->sell($dayData['date'], $dayData['today_end'], 0);
             }
 
             // 今日均线赋值给前一日均线
@@ -156,7 +168,7 @@ class CalcProfitCommand extends Command
         // 全部卖出
         $this->sell($end, $list[count($list)-1]['today_end'], 0);
         // 分析一下
-        $this->parse();
+        return $this->parse();
     }
 
     /**
@@ -198,7 +210,7 @@ class CalcProfitCommand extends Command
                 $item['profit_ratio'] = round($item['profit']/($item['buy_price'] * $item['hands']), 2);// 盈利百分比
 //                echo "{$date}卖出{$item['hands']}手，价格：{$price} 盈利：{$item['profit']}({$item['profit_ratio']}%)\n";
 
-                $this->nowTimes --;// 当前持仓中的买入次数-1
+                $this->nowTimes--;// 当前持仓中的买入次数-1
                 // 如果清仓了，则当前单位手数重置
                 if (empty($this->nowTimes)) {
                     $this->buyHands = 0;
@@ -266,6 +278,7 @@ class CalcProfitCommand extends Command
         echo '盈利百分比列表：' . join('%, ', $profitRatioList) . "%\n";
         rsort($profitRatioList);
         echo '盈利百分比排序：' . join('%, ', $profitRatioList) . "%\n";
+        return $info;
     }
 
     /**

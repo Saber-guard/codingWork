@@ -28,51 +28,65 @@ class TestCallCommand extends Command
      */
     public function handle()
     {
-        $code = '600893';
+        $code = '002008';
         $start = '2018-12-03';
         $end = '2021-12-03';
-        Artisan::call('shares:calcProfit', [
-            '--code' => $code,
-            '--start' => $start,
-            '--end' => $end,
-            '--maSmall' => 3,
-            '--maBig' => 15,
-        ]);
-        Artisan::call('shares:calcProfit', [
-            '--code' => $code,
-            '--start' => $start,
-            '--end' => $end,
-            '--maSmall' => 5,
-            '--maBig' => 15,
-        ]);
-        Artisan::call('shares:calcProfit', [
-            '--code' => $code,
-            '--start' => $start,
-            '--end' => $end,
-            '--maSmall' => 5,
-            '--maBig' => 20,
-        ]);
-        Artisan::call('shares:calcProfit', [
-            '--code' => $code,
-            '--start' => $start,
-            '--end' => $end,
-            '--maSmall' => 5,
-            '--maBig' => 22,
-        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 3,
+//            '--maBig' => 15,
+//            '--addLine' => 15,
+//        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 5,
+//            '--maBig' => 15,
+//            '--addLine' => 15,
+//        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 5,
+//            '--maBig' => 20,
+//            '--addLine' => 15,
+//        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 5,
+//            '--maBig' => 22,
+//            '--addLine' => 15,
+//        ]);
         Artisan::call('shares:calcProfit', [
             '--code' => $code,
             '--start' => $start,
             '--end' => $end,
             '--maSmall' => 5,
             '--maBig' => 30,
+            '--addLine' => 15,
         ]);
-        Artisan::call('shares:calcProfit', [
-            '--code' => $code,
-            '--start' => $start,
-            '--end' => $end,
-            '--maSmall' => 5,
-            '--maBig' => 60,
-        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 5,
+//            '--maBig' => 55,
+//            '--addLine' => 15,
+//        ]);
+//        Artisan::call('shares:calcProfit', [
+//            '--code' => $code,
+//            '--start' => $start,
+//            '--end' => $end,
+//            '--maSmall' => 5,
+//            '--maBig' => 60,
+//            '--addLine' => 15,
+//        ]);
 
         return 0;
     }
