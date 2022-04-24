@@ -16,6 +16,8 @@ public function handle($request, Closure $next)
 		    'http://codingwork.com:8080',
 		    'http://codingwork.com',
 		    'http://codingwork.cn',
+            'http://local.blog.codingwork.cn',
+            'http://blog.codingwork.cn',
 		    'http://local.codingwork.cn',
 		    'http://local.codingwork.cn:8080',
 		);
