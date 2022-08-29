@@ -74,6 +74,7 @@ export default {
       params:{
         "parent":1,
         "select":"title,id",
+        "size":100,
       }
     }).then(function (response) {
       let data = response.data
